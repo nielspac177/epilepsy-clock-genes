@@ -13,6 +13,8 @@ results/*
 !results/geneset_lock.json
 !results/real_circadian_enrichment.tsv
 !results/real_circadian_pergene_*.tsv
+!results/mr_real/
+!results/mr_real/*.tsv
 
 # python
 .venv/
