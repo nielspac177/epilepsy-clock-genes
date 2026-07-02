@@ -9,6 +9,21 @@ pharmacoresistance (morbidity proxy) analysis.
 > underpowered and treated as exploratory. There is **no public GWAS of surgical outcome**, so that
 > aim is a future-ready stub, not a result. See `docs/adr/` and `docs/adversarial_design_review.md`.
 
+## Study design
+
+![Methods overview — circadian-genetics × epilepsy-type analysis flow](docs/figures/methods_figure.png)
+
+***Figure 1. Analysis overview.*** Public summary statistics (slate) feed four analyses (teal).
+Findings are colour-coded by **status**: 🟩 green = positive *but pending confirmation*; ⬜ grey =
+ruled out; 🟧 amber = inconclusive / open (dashed = pending analyses); 🟦 blue = conclusion. The
+GGE circadian gene-set enrichment (ratio 1.53, 95% CI 1.05–2.04, p = 1.7×10⁻³, focal null, anchored
+by an intronic *PER1* variant) is a matched-null result **pending LD-aware MAGMA / stratified-LDSC
+confirmation**; behavioural-sleep Mendelian randomization is a **robust null**; and the brain-eQTL
+colocalization is **underpowered/inconclusive — not a refutation** (the *BMAL1* blood cis-MR was
+retired). Editable source: [`docs/figures/methods_figure.mmd`](docs/figures/methods_figure.mmd)
+(rebuild with `npx @mermaid-js/mermaid-cli -i methods_figure.mmd -o methods_figure.png -s 2 -b white`).
+Reviewed by an adversarial visual + scientific-integrity audit before publication.
+
 ## Scientific aims
 - **Aim 1** — Differential circadian gene-set involvement by type (MAGMA competitive + covariate-
   matched null + stratified-LDSC), with a shared-control-corrected focal-vs-GGE contrast and TOST

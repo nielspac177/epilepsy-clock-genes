@@ -1,0 +1,56 @@
+---
+config:
+  theme: base
+  themeVariables:
+    fontSize: 14px
+    fontFamily: Helvetica, Arial, sans-serif
+---
+flowchart TB
+  %% Row 1 — Inputs (slate)
+  G1["ILAE 2023 epilepsy GWAS<br/>focal · GGE · subtypes"]
+  G2["Sleep-trait GWAS<br/>chronotype · sleep duration"]
+  G3["eQTLGen<br/>blood cis-eQTL"]
+  G4["PsychENCODE<br/>brain cis-eQTL"]
+  %% Row 2 — Analyses (teal)
+  A1["<b>Aim 1 · Gene-set enrichment</b><br/>LD-attenuated top-SNP vs<br/>10,000 matched-null sets"]
+  A2["<b>Aim 2 · Two-sample MR</b><br/>IVW + weighted median +<br/>Egger + PRESSO + Steiger"]
+  A3["<b>Aim 2b · cis-eQTL MR</b><br/>Wald ratio per clock gene"]
+  A4["<b>Aim 2c · Colocalization</b><br/>coloc.abf (brain)"]
+  %% Row 3 — Findings (color = status)
+  R1["<b>✓ ENRICHED</b> — pending confirmation<br/>GGE ratio 1.53 (95% CI 1.05–2.04), p=1.7×10⁻³, anchored by intronic PER1<br/>focal: null<br/><i>set-level; some members co-located (KCNJ4, CAMTA1)</i>"]
+  R2["<b>✗ RULED OUT</b><br/>sleep-behaviour MR:<br/>no robust causal effect<br/>under any estimator"]
+  R3["<b>~ INCONCLUSIVE</b> · expression mechanism<br/>BMAL1 blood cis-MR retired;<br/>brain coloc underpowered<br/>— not refuted"]
+  %% Row 4 — caveat + conclusion
+  P["⏳ Pending confirmation<br/>LD-aware MAGMA · stratified-LDSC<br/>higher-powered brain eQTL"]
+  C["<b>Conclusion · European-ancestry</b><br/>Circadian involvement in GGE <b>appears</b> genetic &amp; gene-local<br/>(pending confirmation; rests on the PER1 locus)<br/>— not sleep behaviour, not steady-state expression —<br/><b>mechanism open</b>"]
+
+  G1 --> A1
+  G1 --> A2
+  G2 --> A2
+  G1 --> A3
+  G3 --> A3
+  G1 --> A4
+  G4 --> A4
+  A1 --> R1
+  A2 --> R2
+  A3 --> R3
+  A4 --> R3
+  R1 -. pending .-> P
+  R1 --> C
+  R2 --> C
+  R3 --> C
+
+  classDef inp fill:#eef2f7,stroke:#64748b,stroke-width:1px,color:#1f2937;
+  classDef ana fill:#e6f0ef,stroke:#3f8f86,stroke-width:1.5px,color:#123b37;
+  classDef pos fill:#e6f5ea,stroke:#1a7f37,stroke-width:2px,color:#03260c;
+  classDef null fill:#eceff1,stroke:#8b95a1,stroke-width:1.5px,color:#2b2f33;
+  classDef open fill:#fdf0d5,stroke:#b8860b,stroke-width:1.5px,color:#3d2f00;
+  classDef pend fill:#fff3cd,stroke:#b8860b,stroke-width:1.5px,color:#3d2f00,stroke-dasharray:4 3;
+  classDef concl fill:#e7effd,stroke:#1f4fa3,stroke-width:2px,color:#0b2350;
+  class G1,G2,G3,G4 inp;
+  class A1,A2,A3,A4 ana;
+  class R1 pos;
+  class R2 null;
+  class R3 open;
+  class P pend;
+  class C concl;
