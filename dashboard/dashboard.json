@@ -1,0 +1,103 @@
+{
+  "kpis": {
+    "primary_verdict": "inconclusive",
+    "geneset_percentile": "100th",
+    "causal_status": "run MR (real data) \u2014 pending",
+    "estimable_cells": "3/10"
+  },
+  "status": [
+    {
+      "phenotype": "all_epilepsy",
+      "trait": "circadian_core",
+      "neff": "76293",
+      "h2z": "9.26",
+      "status": "estimable"
+    },
+    {
+      "phenotype": "focal_epilepsy",
+      "trait": "circadian_core",
+      "neff": "49957",
+      "h2z": "6.06",
+      "status": "estimable"
+    },
+    {
+      "phenotype": "generalized_gge",
+      "trait": "circadian_core",
+      "neff": "25967",
+      "h2z": "5.60",
+      "status": "estimable"
+    },
+    {
+      "phenotype": "focal_lesion_neg",
+      "trait": "circadian_core",
+      "neff": "20673",
+      "h2z": "2.79",
+      "status": "not estimable \u2014 insufficient power"
+    },
+    {
+      "phenotype": "focal_other_lesion",
+      "trait": "circadian_core",
+      "neff": "17455",
+      "h2z": "2.12",
+      "status": "not estimable \u2014 insufficient power"
+    },
+    {
+      "phenotype": "jme",
+      "trait": "circadian_core",
+      "neff": "7010",
+      "h2z": "1.89",
+      "status": "not estimable \u2014 insufficient power"
+    },
+    {
+      "phenotype": "cae",
+      "trait": "circadian_core",
+      "neff": "5113",
+      "h2z": "1.38",
+      "status": "not estimable \u2014 insufficient power"
+    },
+    {
+      "phenotype": "focal_hs",
+      "trait": "circadian_core",
+      "neff": "6658",
+      "h2z": "0.90",
+      "status": "not estimable \u2014 insufficient power"
+    },
+    {
+      "phenotype": "jae",
+      "trait": "circadian_core",
+      "neff": "2400",
+      "h2z": "0.65",
+      "status": "not estimable \u2014 insufficient power"
+    },
+    {
+      "phenotype": "gtcs_alone",
+      "trait": "circadian_core",
+      "neff": "2306",
+      "h2z": "0.54",
+      "status": "not estimable \u2014 insufficient power"
+    }
+  ],
+  "primary_contrast": {
+    "contrast": "focal_vs_gge",
+    "beta_focal": "0.6013",
+    "se_focal": "0.7310",
+    "beta_gge": "1.1214",
+    "se_gge": "0.8583",
+    "rho": "0.9142",
+    "delta": "-0.5201",
+    "se_delta": "0.3520",
+    "z": "-1.477",
+    "p": "1.395e-01",
+    "min_detectable_delta": "0.6899",
+    "verdict": "inconclusive"
+  },
+  "aim3": {
+    "outcome": "drug_resistant_epilepsy",
+    "estimand": "within_epilepsy_pharmacoresistance",
+    "beta": "0.2296",
+    "se": "0.7851",
+    "p": "3.850e-01",
+    "type_conditioned": "no",
+    "note": "CRUDE \u2014 type-conditioning pending (see ADR-0006)"
+  }
+}

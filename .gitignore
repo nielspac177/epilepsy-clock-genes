@@ -23,8 +23,10 @@ __pycache__/
 build/
 dist/
 
-# reference panels / binaries
+# reference panels / binaries / downloaded tools
 reference/
+tools/
+.snakemake/
 *.zip
 *.gz
 !config/**/*.gz
