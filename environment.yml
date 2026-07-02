@@ -1,0 +1,32 @@
+# Pinned analysis environment. LDSC needs its own Python-2 env (see note); everything else here.
+name: epicirc
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.12
+  - pandas>=2.0
+  - numpy>=1.24
+  - pyyaml>=6.0
+  - requests>=2.31
+  - snakemake-minimal>=7.32
+  - matplotlib>=3.8
+  - seaborn>=0.13
+  # bioinformatics binaries
+  - magma>=1.10
+  - plink=1.90b6
+  - plink2
+  - gcta>=1.94
+  # R stack for MR / mediation
+  - r-base>=4.3
+  - r-devtools
+  - r-remotes
+  # dev
+  - pytest>=7.4
+  - pytest-cov>=4.1
+  - ruff>=0.4
+  - mypy>=1.8
+  - pip
+  - pip:
+      # installed via remotes in R: TwoSampleMR, MRPRESSO, CAUSE, MRlap, coloc, GenomicSEM
+      - mygene>=3.2      # gene-symbol -> entrez resolution for geneset curation
+# NOTE: LDSC (github.com/bulik/ldsc) runs under a separate python=2.7 conda env
+#       `ldsc` created in setup; wrappers in src/epicirc/ldsc call it by path.

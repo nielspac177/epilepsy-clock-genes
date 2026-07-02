@@ -1,0 +1,34 @@
+# data — referenced by checksum in config/traits_manifest.yaml, never committed
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# results (regenerated); keep pre-registration + lock files
+results/*
+!results/.gitkeep
+!results/estimable_cells.tsv
+!results/mr_power.tsv
+!results/feasibility.tsv
+!results/geneset_lock.json
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# reference panels / binaries
+reference/
+*.zip
+*.gz
+!config/**/*.gz
+
+# os / editor
+.DS_Store
+.ipynb_checkpoints/

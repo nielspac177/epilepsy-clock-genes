@@ -1,0 +1,17 @@
+# POSITIVE-CONTROL GENE SET: established monogenic/common-variant epilepsy genes.
+# Purpose: the pipeline MUST recover enrichment of this set in the epilepsy GWAS; if it does
+# not, the MAGMA/annotation wiring is broken. NOT a circadian set.
+# Source: curated from ILAE gene panels + known GGE/focal Mendelian genes.
+symbol	entrez_id	ensembl_id	rationale
+SCN1A	6323	ENSG00000144285	Dravet / GEFS+; strong epilepsy signal
+SCN1B	6324	ENSG00000105711	GEFS+
+GABRA1	2554	ENSG00000022355	JME / GGE
+GABRG2	2566	ENSG00000113327	GEFS+ / CAE
+GABRB3	2562	ENSG00000166206	GGE / absence
+CACNA1H	8912	ENSG00000196557	CAE susceptibility
+KCNQ2	3785	ENSG00000075043	neonatal epilepsy
+KCNQ3	3786	ENSG00000184156	neonatal epilepsy
+STX1B	112755	ENSG00000188343	GGE with febrile seizures
+SLC2A1	6513	ENSG00000117394	GLUT1 deficiency / absence
+DEPDC5	9681	ENSG00000100150	familial focal epilepsy
+CHRNA4	1137	ENSG00000101204	sleep-related hypermotor (focal)

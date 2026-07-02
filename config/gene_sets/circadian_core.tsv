@@ -1,0 +1,29 @@
+# PRE-REGISTERED PRIMARY GENE SET: core circadian ("clock") genes
+# Frozen before any outcome analysis. Do not edit after data lock (see docs/adr/0003-preregistration.md).
+# entrez_id is a CONVENIENCE column; curate.py re-validates every symbol against the MAGMA
+# gene annotation (NCBI37/38 .gene.loc) at build time and fails loudly on any mismatch.
+# rationale: role in the core transcription-translation feedback loop (TTFL).
+symbol	entrez_id	ensembl_id	rationale
+ARNTL	406	ENSG00000133794	core TTFL positive arm (BMAL1)
+ARNTL2	56938	ENSG00000029153	BMAL2 paralog, positive arm
+CLOCK	9575	ENSG00000134852	core TTFL positive arm
+NPAS2	4862	ENSG00000170485	CLOCK paralog, positive arm
+PER1	5187	ENSG00000179094	core TTFL negative arm
+PER2	8864	ENSG00000132326	core TTFL negative arm
+PER3	8863	ENSG00000049246	core TTFL negative arm
+CRY1	1407	ENSG00000008405	core TTFL negative arm
+CRY2	1408	ENSG00000121671	core TTFL negative arm
+NR1D1	9572	ENSG00000126368	stabilizing loop (REV-ERBalpha)
+NR1D2	9975	ENSG00000174738	stabilizing loop (REV-ERBbeta)
+RORA	6095	ENSG00000069667	stabilizing loop (ROR)
+RORB	6096	ENSG00000198963	stabilizing loop (ROR)
+RORC	6097	ENSG00000143365	stabilizing loop (ROR)
+CSNK1D	1453	ENSG00000141551	kinase, PER phosphorylation/period length
+CSNK1E	1454	ENSG00000213923	kinase, PER phosphorylation/period length
+FBXL3	26224	ENSG00000174040	E3 ligase, CRY degradation
+DBP	1628	ENSG00000105516	clock-controlled PAR-bZIP output
+NFIL3	4783	ENSG00000165030	clock-controlled output (E4BP4)
+TIMELESS	8914	ENSG00000111602	replication/clock-associated
+BHLHE40	8553	ENSG00000134107	repressor of CLOCK-BMAL1 (DEC1)
+BHLHE41	79365	ENSG00000123095	repressor of CLOCK-BMAL1 (DEC2)
+CIART	148523	ENSG00000135697	clock-controlled repressor (CHRONO)

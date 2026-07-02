@@ -1,0 +1,53 @@
+# Data manifest: every external GWAS summary statistic used, with provenance + integrity.
+# `sha256: null` means "record on first download" (download.py fills and freezes it).
+# Nothing large is committed to git; only this manifest + checksums are versioned.
+
+reference:
+  ld_scores_eur:
+    desc: LDSC European LD scores (1000G Phase 3)
+    url: https://zenodo.org/records/8182036   # eur_w_ld_chr (pinned release)
+    sha256: null
+  magma_gene_loc:
+    desc: MAGMA NCBI37 gene location file
+    url: https://ctg.cncr.nl/software/MAGMA/aux_files/NCBI37.3.zip
+    sha256: null
+  g1000_eur_plink:
+    desc: MAGMA/PRS reference genotypes (1000G EUR PLINK)
+    url: https://ctg.cncr.nl/software/MAGMA/ref_data/g1000_eur.zip
+    sha256: null
+
+# ---- OUTCOMES: epilepsy (ILAE Consortium on Complex Epilepsies, 2023) ----
+# epiGAD portal: http://www.epigad.org  (DOI 10.1038/s41588-023-01485-w)
+epilepsy:
+  all_epilepsy:      {n_cases: 29944, n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD}
+  focal_epilepsy:    {n_cases: 16384, n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD, role: primary_contrast_A}
+  generalized_gge:   {n_cases: 7407,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD, role: primary_contrast_B}
+  jme:               {n_cases: 1813,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD, note: low_power_flag}
+  cae:               {n_cases: 1310,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD, note: low_power_flag}
+  jae:               {n_cases: 607,   n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD, note: low_power_flag}
+  gtcs_alone:        {n_cases: 583,   n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD, note: low_power_flag}
+  focal_hs:          {n_cases: 1719,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD}
+  focal_lesion_neg:  {n_cases: 5732,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD}
+  focal_other_lesion:{n_cases: 4759,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD}
+
+# ---- EXPOSURES: circadian / sleep traits ----
+circadian:
+  chronotype_morning: {desc: "morningness (Jones 2019, UKB ~449k)", ancestry: EUR, sha256: null, url: SLEEP_GWAS, role: primary_exposure}
+  insomnia:           {desc: "insomnia (Jansen 2019)", ancestry: EUR, sha256: null, url: SLEEP_GWAS}
+  sleep_duration:     {desc: "sleep duration (Dashti 2019)", ancestry: EUR, sha256: null, url: SLEEP_GWAS}
+  daytime_napping:    {desc: "daytime napping (Dashti 2021)", ancestry: EUR, sha256: null, url: SLEEP_GWAS}
+
+# ---- Aim 3: morbidity/severity proxies + comorbidity ----
+severity:
+  drug_resistant_epilepsy: {desc: "DRE GWAS (eBioMedicine 2025)", ancestry: EUR, sha256: null, url: PUBLISHED}
+comorbidity:
+  mdd: {desc: "major depression (PGC)", ancestry: EUR, sha256: null, url: PGC}
+  bip: {desc: "bipolar disorder (PGC)", ancestry: EUR, sha256: null, url: PGC}
+  adhd: {desc: "ADHD (PGC/iPSYCH)", ancestry: EUR, sha256: null, url: PGC}
+
+# ---- SAMPLE OVERLAP: which datasets share subjects (drives LDSC-intercept / MR handling) ----
+# UK Biobank appears in circadian GWAS but NOT in the ILAE epilepsy GWAS -> low overlap expected,
+# but rg is still estimated with unconstrained LDSC intercept and cross-checked. See ADR-0004.
+overlap_notes:
+  ukb_in_epilepsy: false
+  ukb_in_circadian: true

@@ -1,0 +1,88 @@
+# Reproducible DAG: download -> munge/harmonize -> Aim1/Aim2/Aim3 -> figures -> report.
+# Run `snakemake -n` for a dry-run of the full graph. External binaries (ldsc, magma, plink,
+# gcta, Rscript) are provided by environment.yml and pinned in the container.
+#
+# NOTE: rules are wired to config; heavy steps require the reference panels declared in
+# config/traits_manifest.yaml. The pipeline is designed so `snakemake -n` reproduces the DAG
+# from a clean checkout even before large downloads exist.
+
+configfile: "config/analysis_params.yaml"
+
+import yaml
+with open("config/traits_manifest.yaml") as fh:
+    MANIFEST = yaml.safe_load(fh)
+
+EPILEPSY = list(MANIFEST["epilepsy"].keys())
+CIRCADIAN = list(MANIFEST["circadian"].keys())
+GENESETS = ["circadian_core", "circadian_extended_GO0007623", "positive_control", "negative_controls"]
+
+rule all:
+    input:
+        "results/geneset_lock.json",
+        expand("results/magma/{gs}__{epi}.gsa.out", gs=GENESETS, epi=EPILEPSY),
+        expand("results/ldsc/rg__{epi}__{circ}.log", epi=EPILEPSY, circ=CIRCADIAN),
+        expand("results/mr/{circ}__{epi}.tsv", circ=CIRCADIAN, epi=EPILEPSY),
+        "results/aim1_heterogeneity.tsv",
+        "results/aim3_severity.tsv",
+        "results/report.html",
+
+# ---- provenance: freeze gene-set hashes before anything touches outcomes ----
+rule geneset_lock:
+    input: "config/gene_sets/circadian_core.tsv", "config/gene_sets/positive_control.tsv"
+    output: "results/geneset_lock.json"
+    shell: "python -m epicirc.geneset.lock --config config/gene_sets --out {output}"
+
+# ---- data layer ----
+rule download:
+    output: "data/raw/{dataset}.sumstats.gz"
+    shell: "python -m epicirc.data.download --dataset {wildcards.dataset} --manifest config/traits_manifest.yaml --out {output}"
+
+rule munge:
+    input: "data/raw/{dataset}.sumstats.gz"
+    output: "data/processed/{dataset}.sumstats.gz"
+    shell: "python -m epicirc.data.munge --in {input} --out {output}"
+
+# ---- Aim 1a: MAGMA competitive gene-set analysis ----
+rule magma_gene:
+    input: sumstats="data/processed/{epi}.sumstats.gz"
+    output: "results/magma/{epi}.genes.raw"
+    shell: "python -m epicirc.magma.run_gene --sumstats {input.sumstats} --epi {wildcards.epi} --out {output}"
+
+rule magma_geneset:
+    input: genes="results/magma/{epi}.genes.raw", setfile="results/genesets/{gs}.set"
+    output: "results/magma/{gs}__{epi}.gsa.out"
+    shell: "python -m epicirc.magma.run_set --genes {input.genes} --set {input.setfile} --out {output}"
+
+# ---- Aim 1c: LDSC genetic correlation (+ cross-trait intercept = rho) ----
+rule ldsc_rg:
+    input: a="data/processed/{epi}.sumstats.gz", b="data/processed/{circ}.sumstats.gz"
+    output: "results/ldsc/rg__{epi}__{circ}.log"
+    shell: "python -m epicirc.ldsc.run_rg --a {input.a} --b {input.b} --out results/ldsc/rg__{wildcards.epi}__{wildcards.circ}"
+
+# ---- Aim 1 synthesis: focal-vs-GGE heterogeneity, power-gated, multiple-testing corrected ----
+rule aim1_heterogeneity:
+    input:
+        gsa=expand("results/magma/{gs}__{epi}.gsa.out", gs=GENESETS, epi=EPILEPSY),
+        rg=expand("results/ldsc/rg__{epi}__{circ}.log", epi=EPILEPSY, circ=CIRCADIAN),
+    output: "results/aim1_heterogeneity.tsv"
+    shell: "python -m epicirc.stats.run_aim1 --config config/analysis_params.yaml --out {output}"
+
+# ---- Aim 2: two-sample MR ----
+rule mr:
+    input: exp="data/processed/{circ}.sumstats.gz", out="data/processed/{epi}.sumstats.gz"
+    output: "results/mr/{circ}__{epi}.tsv"
+    shell: "python -m epicirc.mr.run --exposure {input.exp} --outcome {input.out} --out {output}"
+
+# ---- Aim 3: severity/morbidity proxies ----
+rule aim3_severity:
+    input:
+        expand("results/magma/{gs}__drug_resistant_epilepsy.gsa.out", gs=GENESETS),
+    output: "results/aim3_severity.tsv"
+    shell: "python -m epicirc.stats.run_aim3 --config config/analysis_params.yaml --out {output}"
+
+# ---- reporting ----
+rule report:
+    input: "results/aim1_heterogeneity.tsv", "results/aim3_severity.tsv",
+           expand("results/mr/{circ}__{epi}.tsv", circ=CIRCADIAN, epi=EPILEPSY)
+    output: "results/report.html"
+    shell: "python -m epicirc.viz.report --results results --out {output}"

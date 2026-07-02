@@ -1,0 +1,121 @@
+# Pre-specified analysis parameters — HARDENED per docs/adversarial_design_review.md.
+# Changing these after data lock must be logged as a deviation in docs/adr and the manuscript.
+# (Subtype case counts in traits_manifest.yaml are provisional; download.py reconciles them and
+#  computes effective N = 4 / (1/Ncase + 1/Ncontrol) into results/estimable_cells.tsv.)
+
+# ---------------------------------------------------------------------------
+# CONFIRMATORY vs EXPLORATORY (threats #3, #5, #7): the study is powered for a few phenotypes.
+# ---------------------------------------------------------------------------
+confirmatory_scope:
+  phenotypes: [focal_epilepsy, generalized_gge]   # + all_epilepsy for context
+  primary_contrast:
+    a: focal_epilepsy
+    b: generalized_gge
+    exposure_set: circadian_core
+    hypothesis: >
+      Circadian core-gene common-variant involvement differs between GGE and focal epilepsy
+      (directional prior: GGE > focal), consistent with the sleep/wake-linked phenotype of GGE.
+  exploratory_phenotypes: [jme, cae, jae, gtcs_alone, focal_hs, focal_lesion_neg, focal_other_lesion]
+  rule: >
+    All per-subtype results are labelled exploratory/hypothesis-generating in title & abstract.
+    Gated cells are reported as "not estimable — insufficient power", NEVER as "null".
+
+geneset_analysis:                 # Aim 1a (MAGMA) — threats #4, #11, #12, #13, #17, #18
+  model: competitive
+  gene_window_kb: [35, 10]
+  window_sweep_kb: [[0, 0], [10, 10], [35, 10]]     # robustness (#18)
+  base_covariates: [gene_size, gene_density, log_snp_count, inverse_mac]
+  conditional_covariates: [gtex_brain_mean_expr, loeuf, pli]   # #4: brain-expr/constraint
+  primary_definition: circadian_core                # single primary (#17)
+  secondary_hierarchy: [circadian_extended_GO0007623]
+  go_evidence_codes: experimental_only              # exclude IEA (#13)
+  robustness:
+    leave_one_gene_out: true                        # #18
+    leave_known_epilepsy_genes_out: true            # #13
+    leave_ion_channels_out: true                    # #13
+  type_difference:                                  # #11: do NOT z-test independent betas
+    method: shared_control_casecase_gwas            # build focal-vs-GGE GWAS then one gene-set test
+    fallback: control_resampling_permutation_null
+    down_sample_gge_to_focal_neff: true             # #12
+
+null_calibration:                 # #4, #14: covariate-matched, not random
+  n_random_genesets: 1000
+  match_on: [set_size, gene_length, snp_count, ld_score, gtex_brain_expr_decile, loeuf_decile]
+  report: empirical_percentile
+  seed: 20260702
+
+partitioned_h2:                   # Aim 1b (stratified LDSC)
+  annotation: circadian_core_gene_body
+  flank_kb: 100
+  baseline: baselineLD_v2.2
+  report: [enrichment_ratio, standardized_tau_star]   # #12
+  orthogonal_check: ldsc_seg                           # #18
+
+genetic_correlation:              # Aim 1c (LDSC rg) — threats #5, #6, #21
+  h2_zscore_gate: 4.0
+  estimable_cells_prereg: results/estimable_cells.tsv  # expected h2 z from Neff, fixed pre-data (#5)
+  intercept: free
+  difference_test: jackknife_block_within_replicate    # captures shared-control covariance (#21)
+  equivalence_test:                                    # #6: replace "did not differ"
+    method: tost
+    sesoi_delta_rg: 0.2
+    report_min_detectable_difference: true
+    verdict: [detected, equivalent, inconclusive]
+
+mendelian_randomization:          # Aim 2 — threats #1, #2, #3, #8, #9, #10, #16, #19
+  direction: exposure_to_outcome
+  confirmatory_pairs_only: true                        # gated by results/mr_power.tsv (#7)
+  behavioural_exposures: [chronotype_morning, insomnia, sleep_duration, daytime_napping]
+  primary_method: ivw
+  sensitivity: [mr_egger, weighted_median, mr_presso]
+  correlated_pleiotropy_primary: cause                 # #10
+  overlap:                                             # #8
+    measure_bivariate_ldsc_intercept_per_pair: true
+    if_nonnegligible_use: [mrlap, cause]
+    report_conditional_F: true
+  winners_curse_shrinkage: [conditional_likelihood, fiqt]   # #9
+  cis_anchoring:                                       # #3: localize to the clock
+    cis_eqtl_pqtl_mr_core_clock_genes: true
+    colocalization: [coloc, smr_heidi]
+    require_concordance_with_behavioural: true         # gate on "circadian biology" language
+  mvmr_conditioning: [bmi, t2d, mdd, bip, adhd]        # #10 metabolic + #1 psychiatric
+  mediation:                                           # #1: NOT mtCOJO-as-truth
+    method: network_mr
+    report: [total_effect, direct_effect_mvmr, indirect_effect_two_step]
+    role_swap_sensitivity: true                        # confounder vs mediator vs collider
+    mtcojo: labelled_sensitivity_only
+  index_event_bias:                                     # #2: MR onto "type"
+    correction: [slope_hunter, cwls]
+    prefer_subtype_vs_control_outcomes: true
+  bridging:
+    leave_clock_out_mr: true                            # #19
+  reverse_mr:
+    run_only_if_min_instruments: 3
+    report: "consistent with, not established by (where weak)"
+  steiger_filter: true
+
+aim3_severity:                    # threats #20, #24
+  outcome: drug_resistant_epilepsy
+  estimand: within_epilepsy_pharmacoresistance         # NOT surgery/severity (#20)
+  type_conditioning: [within_type_analysis, mtcojo_condition_on_focal_gge_liability]
+  adjust_pgx_loci: [hla, drug_transporters]
+  circadian_burden_operationalization: magma_gene_z_aggregation_core_set   # single, pre-specified (#24)
+  report_dre_h2z_and_intercept_first: true
+  surgery: stub_only                                    # requires individual-level data (see ADR-0006)
+
+multiple_testing:                 # threats #5, #17, #21, #22
+  confirmatory_family: [focal, gge, focal_vs_gge]       # small Bonferroni family
+  confirmatory: bonferroni
+  exploratory: ihw                                      # IHW with Neff / h2 z as covariate (#22)
+  gene_set_definition_axis_in_correction: true          # #17
+  effective_number_of_tests: eigen_decomposition_of_estimate_correlation   # #21
+  global_ledger: true                                   # spans Aims 1–3
+
+ancestry:
+  primary: EUR
+  note: cross-ancestry portability untested; stated as a limitation
+
+preregistration_tables:           # written BEFORE touching outcomes (#5, #7, #15)
+  - results/estimable_cells.tsv   # per phenotype x trait: Neff, expected h2 z, estimable flag
+  - results/mr_power.tsv          # per exposure->outcome: Brion/mRnd power, min-detectable-OR, confirmatory flag
+  - results/feasibility.tsv       # per subtype: #GWS instruments, mean F, h2 z (gates reverse-MR/mediation)
