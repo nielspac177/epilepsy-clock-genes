@@ -1,0 +1,52 @@
+{
+  "gene_sets": {
+    "circadian_core": {
+      "n_genes": 23,
+      "sha256": "3ee5e77e404fcdebf6f70939f93d573a7b410c243ed80927837fb9c8d0b64359",
+      "symbols": [
+        "ARNTL",
+        "ARNTL2",
+        "BHLHE40",
+        "BHLHE41",
+        "CIART",
+        "CLOCK",
+        "CRY1",
+        "CRY2",
+        "CSNK1D",
+        "CSNK1E",
+        "DBP",
+        "FBXL3",
+        "NFIL3",
+        "NPAS2",
+        "NR1D1",
+        "NR1D2",
+        "PER1",
+        "PER2",
+        "PER3",
+        "RORA",
+        "RORB",
+        "RORC",
+        "TIMELESS"
+      ]
+    },
+    "positive_control": {
+      "n_genes": 12,
+      "sha256": "dde54b6d21cf6442be7b9929211eca55bed13aad9b849e02cf049e0447ab6c99",
+      "symbols": [
+        "CACNA1H",
+        "CHRNA4",
+        "DEPDC5",
+        "GABRA1",
+        "GABRB3",
+        "GABRG2",
+        "KCNQ2",
+        "KCNQ3",
+        "SCN1A",
+        "SCN1B",
+        "SLC2A1",
+        "STX1B"
+      ]
+    }
+  },
+  "overlaps": {}
+}

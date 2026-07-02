@@ -1,0 +1,11 @@
+phenotype	n_cases	n_controls	n_eff	h2_liab_prior	expected_h2_z	estimable
+all_epilepsy	29944	52538	76293	0.18	9.26	yes
+focal_epilepsy	16384	52538	49957	0.18	6.06	yes
+generalized_gge	7407	52538	25967	0.32	5.60	yes
+focal_lesion_neg	5732	52538	20673	0.20	2.79	no
+focal_other_lesion	4759	52538	17455	0.18	2.12	no
+jme	1813	52538	7010	0.40	1.89	no
+cae	1310	52538	5113	0.40	1.38	no
+focal_hs	1719	52538	6658	0.20	0.90	no
+jae	607	52538	2400	0.40	0.65	no
+gtcs_alone	583	52538	2306	0.35	0.54	no

@@ -28,7 +28,7 @@ epilepsy:
   gtcs_alone:        {n_cases: 583,   n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD, note: low_power_flag}
   focal_hs:          {n_cases: 1719,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD}
   focal_lesion_neg:  {n_cases: 5732,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD}
-  focal_other_lesion:{n_cases: 4759,  n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD}
+  focal_other_lesion: {n_cases: 4759, n_controls: 52538, ancestry: EUR, sha256: null, url: EPIGAD}
 
 # ---- EXPOSURES: circadian / sleep traits ----
 circadian:
