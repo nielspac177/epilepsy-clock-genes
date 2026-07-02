@@ -1,0 +1,6 @@
+method	n_snps	beta	se	p	extra
+ivw	3	1.95875	1.18504	9.835e-02	{'cochran_q': 0.11257408239321468, 'q_df': 2}
+mr_egger	3	1.85316	0.07137	1.168e-148	{'intercept': -0.0021491820669247777, 'intercept_se': 0.00037817373517431014, 'intercept_p': 1.3230983786359202e-08, 'pleiotropy_flag': True}
+weighted_median	3	2.15804	1.34858	1.095e-01	{}
+mr_presso_lite	3	1.95875	1.18504	9.835e-02	{'n_outliers': 0, 'global_Q': 0.11257408239321468, 'Q_df': 2}
+steiger_ivw	3	1.95875	1.18504	9.835e-02	{'n_removed': 0}

@@ -18,19 +18,26 @@ across ≥6 independent chromosomes** — **PER1 genome-wide significant (P=5.8�
 (9×10⁻⁷), PER3 (4×10⁻⁶), ARNTL/BMAL1 (8×10⁻⁶), RORA (2×10⁻⁵), NPAS2 (4×10⁻⁵). The **same genes are
 null in focal**, controlling for gene-size/brain-expression confounds on the difference.
 
-## 2. Two-sample MR of sleep exposures (Aim 2 first look)
-`results/mr_real/*.tsv` — IVW, distance-clumped (±1 Mb), CHR:POS-matched, harmonized.
+## 2. Two-sample MR of sleep exposures (Aim 2) — behavioural traits
+`results/mr_real/*.tsv` — 5 estimators, distance-clumped (±1 Mb), CHR:POS-matched, harmonized.
+Exposures fetched GRCh37 from GWAS Catalog: chronotype (Jones 2019), sleep duration / short / long
+sleep (Dashti 2019). Insomnia (Hammerschlag 2017) had too few instruments (underpowered, 113k);
+the larger Jansen insomnia is access-restricted (23andMe).
 
-| Exposure → outcome | IVW β | p | Egger intercept | Cochran Q |
-|---|---|---|---|---|
-| chronotype → GGE | −0.050 | 0.10 | ~0 (ns) | 233/98 (high) |
-| chronotype → focal | −0.030 | 0.19 | ~0 (ns) | 112/97 |
-| **sleep duration → GGE** | **−0.181** | **0.042** | ~0 (ns) | 164/51 (high) |
-| sleep duration → focal | +0.091 | 0.17 | ~0 (ns) | 56/50 |
+**Robustness is decisive — the nominal IVW hits do NOT survive sensitivity analysis** (β [p]):
 
-**Pattern:** longer sleep duration and morningness both trend **protective for GGE**, and the sleep
--duration effect **reverses sign in focal** — a GGE-specific, direction-consistent echo of the
-enrichment result. Sleep duration → GGE is nominally significant.
+| Exposure → GGE | IVW | weighted median | MR-PRESSO | Steiger | verdict |
+|---|---|---|---|---|---|
+| sleep duration | −0.18 [0.04] | **+0.18** [0.23] | −0.08 [0.38] | +0.01 [0.95] | **not robust** (sign flips; 4 outliers; Q=164) |
+| short sleep | +0.92 [0.03] | −0.11 [0.86] | +0.23 [0.59] | −0.39 [0.57] | **not robust** (unstable; borderline Egger pleiotropy) |
+| chronotype | −0.05 [0.10] | −0.04 [0.48] | −0.04 [0.24] | −0.02 [0.53] | directionally stable (protective) but **ns** |
+| long sleep | +1.96 [0.10] | — | — | — | uninterpretable (3 instruments) |
+
+**Conclusion:** no behavioural sleep/circadian trait has a **robust** causal effect on GGE or focal.
+Nominal IVW signals were driven by heterogeneous/outlier instruments (high Cochran Q). Chronotype
+shows a consistent-but-non-significant protective trend for GGE > focal. **Interpretation:** the
+strong GGE circadian gene-set enrichment (Result 1) is **not explained by causal sleep behaviour**,
+which points toward the molecular clock / shared genetic architecture — motivating cis-clock-gene MR.
 
 ## Caveats (why these are not yet claims)
 - Enrichment all-SNP z is **LD-inflated**; needs MAGMA (gene-based, LD-aware) + covariate-matched

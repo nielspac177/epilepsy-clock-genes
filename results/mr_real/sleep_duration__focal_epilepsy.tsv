@@ -1,3 +1,6 @@
-method	n_instruments	beta	se	p	extra
+method	n_snps	beta	se	p	extra
 ivw	51	0.09073	0.06608	1.697e-01	{'cochran_q': 56.06698282672389, 'q_df': 50}
 mr_egger	51	0.08601	0.07136	2.281e-01	{'intercept': 0.000503734821125685, 'intercept_se': 0.0011457419946264012, 'intercept_p': 0.660184707826335, 'pleiotropy_flag': False}
+weighted_median	51	0.12854	0.10046	2.007e-01	{}
+mr_presso_lite	51	0.09073	0.06608	1.697e-01	{'n_outliers': 0, 'global_Q': 56.06698282672389, 'Q_df': 50}
+steiger_ivw	47	0.08971	0.06821	1.885e-01	{'n_removed': 4}
