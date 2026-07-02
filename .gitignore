@@ -11,6 +11,8 @@ results/*
 !results/mr_power.tsv
 !results/feasibility.tsv
 !results/geneset_lock.json
+!results/real_circadian_enrichment.tsv
+!results/real_circadian_pergene_*.tsv
 
 # python
 .venv/

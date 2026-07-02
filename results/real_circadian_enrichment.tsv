@@ -1,0 +1,4 @@
+phenotype	n_circadian_snps	n_genes_hit	genome_mean_chi2	circadian_mean_chi2	enrichment_ratio	z_enrich	p_enrich	top_snp_per_gene_mean_chi2	lambda_gc	n_genome_snps
+all_epilepsy	6680	23	1.2566	1.2409	0.9875	-0.7065	0.7601	7.4420	1.2498	4880198
+focal_epilepsy	6718	23	1.1648	1.0615	0.9114	-5.1146	1.0000	6.0505	1.1587	4861641
+generalized_gge	6720	23	1.3195	1.9644	1.4888	25.3339	0.0000	10.6949	1.2631	4866065
