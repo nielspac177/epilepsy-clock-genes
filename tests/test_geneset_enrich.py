@@ -36,5 +36,6 @@ def test_matched_null_is_deterministic_and_returns_pvalue():
     a = matched_null(top, length, nsnp, clock, n_null=500, seed=1)
     b = matched_null(top, length, nsnp, clock, n_null=500, seed=1)
     assert a == b
-    obs, null_mean, p = a
-    assert 0 < p <= 1
+    assert 0 < a["emp_p"] <= 1
+    assert a["obs_lo"] <= a["obs"] <= a["obs_hi"]      # bootstrap CI brackets the estimate
+    assert a["null_lo"] <= a["null_mean"] <= a["null_hi"]

@@ -97,7 +97,8 @@ def matched_null(top, length, nsnp, clock_present, n_null, seed):
     for g in genes:
         strata[(len_dec[g], snp_dec[g])].append(g)
     rng = random.Random(seed)
-    obs = sum(top[g] for g in clock_present) / len(clock_present)
+    k = len(clock_present)
+    obs = sum(top[g] for g in clock_present) / k
     ge = 0
     null_means = []
     for _ in range(n_null):
@@ -110,7 +111,18 @@ def matched_null(top, length, nsnp, clock_present, n_null, seed):
         if m >= obs:
             ge += 1
     null_mean = sum(null_means) / len(null_means)
-    return obs, null_mean, (ge + 1) / (n_null + 1)
+    null_means.sort()
+    null_lo = null_means[int(0.025 * n_null)]
+    null_hi = null_means[int(0.975 * n_null)]
+    # bootstrap the clock gene set for a CI on the observed mean (finite-set uncertainty)
+    vals = [top[g] for g in clock_present]
+    boot = sorted(sum(rng.choice(vals) for _ in range(k)) / k for _ in range(2000))
+    obs_lo, obs_hi = boot[int(0.025 * 2000)], boot[int(0.975 * 2000)]
+    return {
+        "obs": obs, "obs_lo": obs_lo, "obs_hi": obs_hi,
+        "null_mean": null_mean, "null_lo": null_lo, "null_hi": null_hi,
+        "emp_p": (ge + 1) / (n_null + 1),
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -128,18 +140,25 @@ def main(argv: list[str] | None = None) -> int:
     print(f"[enrich2] scanning {args.label} ...", file=sys.stderr)
     top, nsnp = gene_top_chi2(args.outcome, by_chr)
     clock_present = [g for g in CLOCK if g in top]
-    obs, null_mean, p = matched_null(top, length, nsnp, clock_present, args.n_null, args.seed)
-    ratio = obs / null_mean if null_mean else float("nan")
+    r = matched_null(top, length, nsnp, clock_present, args.n_null, args.seed)
+    obs, nm, p = r["obs"], r["null_mean"], r["emp_p"]
+    ratio = obs / nm if nm else float("nan")
+    ratio_lo = r["obs_lo"] / nm if nm else float("nan")
+    ratio_hi = r["obs_hi"] / nm if nm else float("nan")
 
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     write_header = not out.exists()
     with out.open("a") as fh:
         if write_header:
-            fh.write("phenotype\tn_clock_genes\tobs_mean_top_chi2\tmatched_null_mean\tratio\temp_p\n")
-        fh.write(f"{args.label}\t{len(clock_present)}\t{obs:.3f}\t{null_mean:.3f}\t{ratio:.3f}\t{p:.2e}\n")
-    print(f"[enrich2] {args.label}: obs={obs:.2f} null={null_mean:.2f} ratio={ratio:.2f} "
-          f"emp_p={p:.2e} ({len(clock_present)} clock genes)", file=sys.stderr)
+            fh.write("phenotype\tn_clock_genes\tobs_mean_top_chi2\tobs_lo\tobs_hi\t"
+                     "matched_null_mean\tnull_lo\tnull_hi\tratio\tratio_lo\tratio_hi\temp_p\n")
+        fh.write(f"{args.label}\t{len(clock_present)}\t{obs:.3f}\t{r['obs_lo']:.3f}\t{r['obs_hi']:.3f}\t"
+                 f"{nm:.3f}\t{r['null_lo']:.3f}\t{r['null_hi']:.3f}\t"
+                 f"{ratio:.3f}\t{ratio_lo:.3f}\t{ratio_hi:.3f}\t{p:.2e}\n")
+    print(f"[enrich2] {args.label}: obs={obs:.2f} [{r['obs_lo']:.2f},{r['obs_hi']:.2f}] "
+          f"null={nm:.2f} ratio={ratio:.2f} [{ratio_lo:.2f},{ratio_hi:.2f}] emp_p={p:.2e} "
+          f"({len(clock_present)} clock genes)", file=sys.stderr)
     return 0
 
 

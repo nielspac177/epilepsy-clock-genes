@@ -1,4 +1,4 @@
-phenotype	n_clock_genes	obs_mean_top_chi2	matched_null_mean	ratio	emp_p
-generalized_gge	23	10.695	7.000	1.528	1.70e-03
-focal_epilepsy	23	6.050	6.157	0.983	5.42e-01
-all_epilepsy	23	7.442	6.659	1.118	1.45e-01
+phenotype	n_clock_genes	obs_mean_top_chi2	obs_lo	obs_hi	matched_null_mean	null_lo	null_hi	ratio	ratio_lo	ratio_hi	emp_p
+generalized_gge	23	10.695	7.354	14.288	7.000	5.389	9.148	1.528	1.050	2.041	1.70e-03
+focal_epilepsy	23	6.050	5.121	6.921	6.157	4.972	7.550	0.983	0.832	1.124	5.42e-01
+all_epilepsy	23	7.442	5.569	9.685	6.659	5.323	8.264	1.118	0.836	1.454	1.45e-01

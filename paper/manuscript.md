@@ -42,14 +42,29 @@ operates at the level of genetic architecture; the precise molecular mechanism r
 
 ## Introduction
 
-Seizures in the generalized epilepsies are tightly coupled to the sleep–wake transition: juvenile
-myoclonic epilepsy (JME) is defined in part by myoclonus on awakening, sleep deprivation is a
-canonical trigger, and patients with generalized seizures are several-fold more likely than
-controls to report an evening chronotype. These observations motivate the "chronoepileptology"
+Seizures in the generalized epilepsies are tightly coupled to the sleep–wake transition. Juvenile
+myoclonic epilepsy is defined in part by myoclonus on awakening, and in generalized tonic-clonic
+seizures on awakening roughly 90% of seizures occur within two hours of waking, at any clock time
+[Frank & Yaari]. Generalized epileptiform discharges are strongly state-dependent — markedly
+potentiated by non-REM sleep and suppressed by alert wakefulness and REM [Ng & Pavlova] — while the
+clinical seizures themselves cluster in wakefulness, giving generalized epilepsy a characteristic
+timing signature distinct from focal epilepsy. Chronotype tracks epilepsy type: in a comparative
+cohort, 36% of patients with generalized epilepsy were evening types versus 11% of those with focal
+epilepsy [Choi et al.], and correcting a comorbid delayed sleep–wake phase disorder (with melatonin,
+sleep scheduling, and light therapy) reduced juvenile-myoclonic-epilepsy seizures from eight to zero
+per month without any change in anti-seizure medication [Khan et al.], implicating circadian
+misalignment in seizure susceptibility. These observations motivate the "chronoepileptology"
 hypothesis that circadian biology shapes seizure liability. Yet prior genetic work linking the
 molecular clock to epilepsy has been limited to animal models of clock-gene expression and small
 candidate-gene studies (typically <100 patients) that were underpowered and largely null; a recent
 review explicitly identified well-powered, subtype-resolved analysis as an open question.
+
+<!-- Citations to resolve (verified via deep-research wf_c2dcf7a8-fa1, 3-0 unless noted):
+  Frank & Yaari — GTC-on-awakening ~90% within 2h [PMC3694483]
+  Ng & Pavlova — NREM potentiation / vigilance-dependence [fneur.2017.00499; S1525505009004557]
+  Choi et al. — 36% GGE vs 11% focal evening types [PMC10368759, 3-0]
+  Khan et al. — DSWPD treatment, JME seizures 8→0/month [PMC10368759, 3-0] -->
+
 
 The ILAE Consortium's third genome-wide association study, comprising 29,944 cases and 52,538
 controls, revealed markedly different common-variant architectures for focal versus generalized
