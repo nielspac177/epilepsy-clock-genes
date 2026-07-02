@@ -52,9 +52,24 @@ Focal: nothing nominal (top CRY1 p=0.11). **ARNTL survives Bonferroni across the
 and is GGE-specific**; it was also a hit in the enrichment (Result 1). Only 8 genes had a cis-eQTL
 present in ILAE; **PER1 (the enrichment lead) has no blood cis-eQTL** — likely brain-specific.
 
-**Convergence:** the molecular clock (ARNTL/BMAL1, NR1D1) shows a GGE-specific causal signal
-*exactly where behavioural sleep MR was null* — evidence that GGE circadian involvement operates at
-the level of clock-gene regulation, not sleep behaviour.
+**Convergence:** the molecular clock (ARNTL/BMAL1) shows a GGE-specific causal signal *exactly where
+behavioural sleep MR was null* — evidence that GGE circadian involvement operates at the level of
+clock-gene regulation, not sleep behaviour.
+
+### 3b. Colocalization screen + brain-eQTL check (`results/mr_real/region_concordance_gge.tsv`)
+Formal coloc.abf needs full-region eQTL (eQTLGen full ≈16 GB) and SMR-HEIDI needs an LD panel
+(unavailable), so we ran a regional concordance screen (full GGE region vs eQTL signal):
+
+| Gene | GGE lead is eQTL? | lead distance | profile r | read |
+|---|---|---|---|---|
+| **ARNTL** | **yes** | 57 kb | 0.70 | consistent with colocalization, **not definitive** |
+| NR1D1 | no | 190 kb | 0.83 (35 SNPs) | **argues against** — likely LD/artifact; downgrade |
+
+**Brain eQTL / PER1:** GTEx brain cortex (n≈200) is too underpowered — **PER1 and ARNTL have zero
+significant cortex eQTLs; NR1D1 has one.** So PER1's GGE association (the enrichment lead) is **not a
+detectable steady-state eQTL** in blood (eQTLGen) or GTEx brain — it may act via splicing/coding or
+context-specific regulation. A well-powered brain source (MetaBrain cortex n≈2.7k / BrainMeta) is
+needed to test PER1 and to run formal coloc on ARNTL.
 
 ## Caveats (why these are not yet claims)
 - Enrichment all-SNP z is **LD-inflated**; needs MAGMA (gene-based, LD-aware) + covariate-matched
