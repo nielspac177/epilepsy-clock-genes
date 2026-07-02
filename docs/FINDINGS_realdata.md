@@ -39,20 +39,40 @@ shows a consistent-but-non-significant protective trend for GGE > focal. **Inter
 strong GGE circadian gene-set enrichment (Result 1) is **not explained by causal sleep behaviour**,
 which points toward the molecular clock / shared genetic architecture — motivating cis-clock-gene MR.
 
+## 3. cis-clock-gene MR (Aim 2, molecular) — the informative one
+`results/mr_real/cis_clock__*.tsv` — top blood cis-eQTL (eQTLGen) per clock gene → ILAE, Wald ratio.
+
+| Gene → GGE | Wald | p | direction |
+|---|---|---|---|
+| **ARNTL (BMAL1)** | **+0.100** | **0.003** | higher expression → higher GGE risk |
+| NR1D1 (REV-ERBα) | −0.159 | 0.072 | higher expression → lower GGE (BMAL1's repressor — coherent) |
+| others (NPAS2, CRY1/2, PER3, RORA, ARNTL2) | — | ns | — |
+
+Focal: nothing nominal (top CRY1 p=0.11). **ARNTL survives Bonferroni across the 8 testable genes
+and is GGE-specific**; it was also a hit in the enrichment (Result 1). Only 8 genes had a cis-eQTL
+present in ILAE; **PER1 (the enrichment lead) has no blood cis-eQTL** — likely brain-specific.
+
+**Convergence:** the molecular clock (ARNTL/BMAL1, NR1D1) shows a GGE-specific causal signal
+*exactly where behavioural sleep MR was null* — evidence that GGE circadian involvement operates at
+the level of clock-gene regulation, not sleep behaviour.
+
 ## Caveats (why these are not yet claims)
 - Enrichment all-SNP z is **LD-inflated**; needs MAGMA (gene-based, LD-aware) + covariate-matched
   null (brain-expression/constraint) and stratified-LDSC (ADR-0005).
-- MR uses **distance-clumping** (LD approximation, no panel) and only IVW/Egger; the nominal
-  sleep-duration→GGE hit has **high Cochran Q** (instrument heterogeneity) → needs weighted-median,
-  MR-PRESSO, and **CAUSE** before trust (ADR-0004).
-- **Multiple testing**: 4 MR tests + enrichment; nominal p-values are not corrected.
-- Behavioural exposures ≠ clock biology: **cis-eQTL/pQTL MR on core clock genes + colocalization**
-  is required to attribute causality to the molecular clock, plus **MVMR** on BMI/T2D/psychiatric.
-- **Insomnia** (Jansen 2019) full stats are access-restricted (23andMe); GWAS Catalog hosts only a
-  no-full-p version. Needs a DUA or the UKB-only release.
+- MR uses **distance-clumping** (LD approximation, no panel). Robust methods now run; behavioural
+  hits did **not** survive (see Result 2).
+- **cis-MR is a screen, not proof**: single blood cis-eQTL per gene, Z/√N effect approximation, **no
+  colocalization** (ARNTL Wald could be LD-confounded by a neighbouring gene), blood≠brain.
+- **Multiple testing**: nominal p-values across the MR grid are not globally corrected (ARNTL does
+  survive Bonferroni within the 8-gene cis panel).
+- Insomnia (Jansen 2019) full stats are access-restricted (23andMe); Hammerschlag UKB version is
+  underpowered (0 usable instruments). Daytime sleepiness (Wang) not cleanly on the FTP.
 
-## Next steps
-1. Robust MR (weighted median, MR-PRESSO, CAUSE) + reverse MR + Steiger on the two exposures.
-2. cis-clock-gene MR + colocalization; MVMR conditioning on BMI/T2D/psychiatric.
-3. Install MAGMA (macOS) + LD panel → real gene-set analysis with matched null; stratified-LDSC rg.
-4. Fetch daytime-napping + short/long-sleep exposures (GCST007559/007560) to complete the panel.
+## Next steps (priority reordered after these results)
+1. **Colocalization** (coloc/SMR-HEIDI) on ARNTL & NR1D1 to rule out LD-confounding — the single
+   most important check before the cis result means anything.
+2. **Brain cis-eQTLs** (GTEx cortex / MetaBrain) for the clock genes — esp. PER1 (no blood eQTL);
+   multi-instrument cis-MR where allelic heterogeneity allows.
+3. Install MAGMA (macOS) + LD panel → LD-aware gene-based test with covariate-matched null;
+   stratified-LDSC rg (replaces the LD-inflated enrichment screen).
+4. MVMR conditioning on BMI/T2D/psychiatric; CAUSE for the behavioural exposures.
