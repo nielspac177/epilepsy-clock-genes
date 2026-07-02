@@ -89,6 +89,24 @@ effect** — consistent with a coding/splicing/context-specific mechanism.
 **Caveats:** PsychENCODE p-value-only eQTL (V approximated from MAF/N, sdY=1); single tissue;
 single-causal-variant assumption; modest eQTL N limits power to detect H4.
 
+## 4. Mechanism probe — VEP annotation of clock-region GGE lead SNPs
+`Ensembl VEP GRCh37`. The lead GGE SNP in each enriched clock region:
+
+| Clock gene | lead SNP | consequence | actually in gene | note |
+|---|---|---|---|---|
+| **PER1** | rs2585398 (GWS 5.8e-10) | **intron_variant** | **PER1** | clean anchor; not an eQTL (§3c) → likely splicing/regulatory |
+| ARNTL | rs1982350 | intron_variant | ARNTL | genuine |
+| NPAS2 | rs4851386 | intron_variant | NPAS2 | genuine |
+| CSNK1E | rs196084 | intron_variant | **KCNJ4** (K⁺ channel) | **co-location confound**, not CSNK1E |
+| PER3 | rs35705966 | 3′UTR | **CAMTA1/VAMP3** | **co-location confound**, not PER3 |
+| RORA / NR1D2 | — | intron / nc-exon | NARG2 / NKIRAS1 | nested-gene ambiguity |
+
+**Read:** the set-level enrichment (Result 1, p=0.0017) is real and GGE-specific, but per-gene it is
+anchored by **PER1** (genome-wide significant, genuinely intronic to PER1). Some suggestive members
+are attributable to non-clock neighbours (KCNJ4, CAMTA1) — a limitation of window-based assignment
+that a full LD-aware fine-mapping / MAGMA would refine. PER1's mechanism is a concrete next target
+(splicing-QTL / functional follow-up), since it is not a steady-state eQTL.
+
 ## Caveats (why these are not yet claims)
 - Enrichment all-SNP z is **LD-inflated**; needs MAGMA (gene-based, LD-aware) + covariate-matched
   null (brain-expression/constraint) and stratified-LDSC (ADR-0005).
