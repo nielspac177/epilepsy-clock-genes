@@ -15,6 +15,7 @@ results/*
 !results/real_circadian_pergene_*.tsv
 !results/mr_real/
 !results/mr_real/*.tsv
+!results/aim1_matched_enrichment.tsv
 
 # python
 .venv/
