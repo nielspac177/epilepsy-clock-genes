@@ -52,9 +52,9 @@ Focal: nothing nominal (top CRY1 p=0.11). **ARNTL survives Bonferroni across the
 and is GGE-specific**; it was also a hit in the enrichment (Result 1). Only 8 genes had a cis-eQTL
 present in ILAE; **PER1 (the enrichment lead) has no blood cis-eQTL** — likely brain-specific.
 
-**Convergence:** the molecular clock (ARNTL/BMAL1) shows a GGE-specific causal signal *exactly where
-behavioural sleep MR was null* — evidence that GGE circadian involvement operates at the level of
-clock-gene regulation, not sleep behaviour.
+**Initial read (later retired):** ARNTL/BMAL1 blood cis-MR looked like a GGE-specific causal signal.
+**This did NOT survive formal brain colocalization (§3c)** — treat as unconfirmed. The blood cis-MR
+is reported for transparency, not as a finding.
 
 ### 3b. Colocalization screen + brain-eQTL check (`results/mr_real/region_concordance_gge.tsv`)
 Formal coloc.abf needs full-region eQTL (eQTLGen full ≈16 GB) and SMR-HEIDI needs an LD panel
@@ -65,11 +65,29 @@ Formal coloc.abf needs full-region eQTL (eQTLGen full ≈16 GB) and SMR-HEIDI ne
 | **ARNTL** | **yes** | 57 kb | 0.70 | consistent with colocalization, **not definitive** |
 | NR1D1 | no | 190 kb | 0.83 (35 SNPs) | **argues against** — likely LD/artifact; downgrade |
 
-**Brain eQTL / PER1:** GTEx brain cortex (n≈200) is too underpowered — **PER1 and ARNTL have zero
-significant cortex eQTLs; NR1D1 has one.** So PER1's GGE association (the enrichment lead) is **not a
-detectable steady-state eQTL** in blood (eQTLGen) or GTEx brain — it may act via splicing/coding or
-context-specific regulation. A well-powered brain source (MetaBrain cortex n≈2.7k / BrainMeta) is
-needed to test PER1 and to run formal coloc on ARNTL.
+**Brain eQTL / PER1:** GTEx brain cortex (n≈200) is too underpowered — PER1/ARNTL have zero
+significant cortex eQTLs. Moved to **PsychENCODE prefrontal cortex (n≈1,387, hg19)** — see 3c.
+
+### 3c. Formal colocalization (coloc.abf, PsychENCODE brain) — the decisive test
+`results/mr_real/coloc_gge.tsv` — full-region brain cis-eQTL vs full ILAE region, PP.H4 = shared
+causal variant. **No clock gene colocalizes with GGE:**
+
+| Gene → GGE | PP.H4 | dominant hypothesis | read |
+|---|---|---|---|
+| ARNTL | **0.01** | H0 0.62 / H2 0.24 | not supported (eQTL underpowered, not distinct) |
+| PER1 | **0.02** | **H2 0.89** (GWAS signal, no eQTL coloc) | GGE signal not via cortical expression |
+| RORA | 0.00 | **H3 0.57** | distinct variants — LD, not shared |
+| NR1D1 / CRY2 / NPAS2 | <0.01 | H0/H1 | no colocalization |
+
+**Verdict:** the blood cis-MR ARNTL hit (p=0.003) does **not** replicate as a shared causal variant
+in brain → **the "BMAL1 causal in GGE" claim is retired** (likely LD-confounding or blood-specific).
+For ARNTL/PER1 the high PP.H0/H2 (not H3) means the cortex eQTL is **underpowered**, so this is
+*inconclusive*, not a refutation — larger brain eQTL (MetaBrain n≈2.7k) or molecular data could
+still find a mechanism. **PER1's strong regional GGE signal (PP.H2=0.89) is real but not an eQTL
+effect** — consistent with a coding/splicing/context-specific mechanism.
+
+**Caveats:** PsychENCODE p-value-only eQTL (V approximated from MAF/N, sdY=1); single tissue;
+single-causal-variant assumption; modest eQTL N limits power to detect H4.
 
 ## Caveats (why these are not yet claims)
 - Enrichment all-SNP z is **LD-inflated**; needs MAGMA (gene-based, LD-aware) + covariate-matched
