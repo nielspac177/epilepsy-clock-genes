@@ -9,7 +9,7 @@ off-scale.*
 
 ```mermaid
 flowchart TD
-  A[ILAE 2023 European GWAS<br/>all-epilepsy, focal, GGE, 7 subtypes] --> A1[Aim 1: circadian gene-set enrichment<br/>LD-robust top-SNP, matched-null]
+  A[ILAE 2023 European GWAS<br/>all-epilepsy, focal, GGE, 7 subtypes] --> A1[Aim 1: circadian gene-set enrichment<br/>LD-attenuated top-SNP, matched-null]
   S[Sleep-trait GWAS<br/>chronotype, sleep duration, short/long sleep] --> A2[Aim 2: two-sample MR<br/>IVW + 4 sensitivity estimators]
   A --> A2
   E1[eQTLGen blood cis-eQTL] --> A3[Aim 2b: cis-MR of clock genes]
@@ -50,9 +50,12 @@ toward the null (conservative).
 
 ## Aim 1 — Circadian gene-set enrichment is GGE-specific
 
-Using an LD-robust top-SNP-per-gene statistic (±50 kb) and a competitive test against 10,000
-gene-length- and SNP-count-matched random gene sets, the 23 core clock genes were enriched for
-association in GGE but not focal epilepsy.
+Using an LD-attenuated top-SNP-per-gene statistic (±50 kb; one approximately independent value per
+gene — a stand-in pending LD-aware MAGMA / stratified-LDSC confirmation) and a competitive test
+against 10,000 gene-length- and SNP-count-matched random gene sets, the 23 core clock genes were
+enriched for association in GGE but not focal epilepsy. *Table 2 uses this matched-null competitive
+test and supersedes the earlier mean-χ² screen in `docs/FINDINGS_realdata.md`; the verdicts and the
+headline p = 1.7×10⁻³ agree, and the ratio values here are the revised matched-null estimates.*
 
 ### Table 2. Circadian gene-set enrichment by phenotype
 
@@ -89,22 +92,22 @@ Two-sample MR of the well-powered behavioural exposures, with the full STROBE-MR
 
 | Exposure → outcome | Method | n IV | β (95% CI) | CI (−0.4…0.4) | p | note |
 |---|---|---:|---|---|---:|---|
-| Chronotype → GGE | IVW | 99 | −0.050 (−0.111, +0.010) | `      ─●│        ` | 0.10 | Q=233 |
+| Chronotype → GGE | IVW | 99 | −0.050 (−0.111, +0.010) | `      ─●│        ` | 0.10 | Q=233; F̄=44 |
 |  | Weighted median | 99 | −0.036 (−0.136, +0.064) | `     ──●│─       ` | 0.48 |  |
 |  | MR-Egger | 99 | −0.050 (−0.145, +0.044) | `     ──●│─       ` | 0.30 | int p=1.00 |
 |  | MR-PRESSO | 96 | −0.037 (−0.099, +0.025) | `      ─●│─       ` | 0.24 | 3 outliers |
 |  | Steiger IVW | 97 | −0.020 (−0.081, +0.042) | `      ──●─       ` | 0.53 |  |
-| Chronotype → Focal | IVW | 98 | −0.030 (−0.075, +0.015) | `       ●│        ` | 0.19 | Q=112 |
+| Chronotype → Focal | IVW | 98 | −0.030 (−0.075, +0.015) | `       ●│        ` | 0.19 | Q=112; F̄=44 |
 |  | Weighted median | 98 | −0.014 (−0.081, +0.053) | `      ──●─       ` | 0.68 |  |
 |  | MR-Egger | 98 | −0.032 (−0.080, +0.016) | `      ─●│        ` | 0.19 | int p=0.29 |
 |  | MR-PRESSO | 98 | −0.030 (−0.075, +0.015) | `       ●│        ` | 0.19 | 0 outliers |
 |  | Steiger IVW | 98 | −0.030 (−0.075, +0.015) | `       ●│        ` | 0.19 |  |
-| Sleep duration → GGE | IVW | 52 | −0.181 (−0.355, −0.006) | ` ───●───│        ` | **0.042** | Q=164 |
+| Sleep duration → GGE | IVW | 52 | −0.181 (−0.355, −0.006) | ` ───●───│        ` | **0.042** | Q=164; F̄=41 |
 |  | Weighted median | 52 | **+0.178** (−0.114, +0.469) | `      ──│───●────` | 0.23 | sign flip |
 |  | MR-Egger | 52 | −0.172 (−0.490, +0.146) | `◄────●──│───     ` | 0.29 | int p=0.68 |
 |  | MR-PRESSO | 48 | −0.081 (−0.261, +0.099) | `   ───●─│──      ` | 0.38 | 4 outliers |
 |  | Steiger IVW | 35 | +0.007 (−0.199, +0.212) | `    ────●────    ` | 0.95 |  |
-| Sleep duration → Focal | IVW | 51 | +0.091 (−0.039, +0.220) | `       ─│─●──    ` | 0.17 | Q=56 |
+| Sleep duration → Focal | IVW | 51 | +0.091 (−0.039, +0.220) | `       ─│─●──    ` | 0.17 | Q=56; F̄=40 |
 |  | Weighted median | 51 | +0.129 (−0.068, +0.325) | `       ─│──●──── ` | 0.20 |  |
 |  | MR-Egger | 51 | +0.086 (−0.054, +0.226) | `       ─│─●───   ` | 0.23 | int p=0.66 |
 |  | MR-PRESSO | 51 | +0.091 (−0.039, +0.220) | `       ─│─●──    ` | 0.17 | 0 outliers |
@@ -114,6 +117,15 @@ The nominal IVW signal for sleep duration → GGE (p=0.042) is not robust: weigh
 sign, and MR-PRESSO (4 outliers removed) and Steiger attenuate it to null, with high instrument
 heterogeneity (Q=164). Chronotype shows a directionally consistent but non-significant protective
 trend for GGE. Short/long sleep and insomnia were underpowered (Supplement S2).
+
+All instrument sets were strong — mean F 40–45, minimum F ≥29, well above the conventional F>10 —
+so weak-instrument bias is unlikely (STROBE-MR relevance assumption). For the primary MR family
+(two exposures × two outcomes tested by IVW) a Bonferroni threshold is α = 0.05/4 = 0.0125; **no MR
+result survives correction**, and the single sub-0.05 IVW result (sleep duration → GGE, p=0.042)
+collapses under sensitivity analysis regardless. Effect sizes are on the **log-odds scale of
+epilepsy per unit genetically-predicted exposure** — per hour for sleep duration, and per log-odds
+for the binary chronotype and short/long-sleep exposures — and are therefore not directly
+comparable in magnitude across exposures.
 
 ### Table 5. Colocalization of clock-gene brain cis-eQTL with GGE (coloc.abf, PsychENCODE)
 

@@ -7,6 +7,12 @@ involvement**. These are FIRST LOOKS with tool-free/approximate methods; the con
 ## 1. Circadian gene-set enrichment (Aim 1 first look)
 `results/real_circadian_enrichment.tsv` — mean-χ² of SNPs in ±50 kb of 23 core clock genes vs genome.
 
+> **Note (superseded as the headline metric):** the values below are the initial LD-inflated
+> mean-χ² *screen*. The confirmatory result is the **LD-attenuated, matched-null competitive test**
+> (`results/aim1_matched_enrichment.tsv`, `paper/RESULTS.md` Table 2): GGE ratio **1.53 (95% CI
+> 1.05–2.04), empirical p = 1.7×10⁻³**; focal 0.98 (0.83–1.12); all-epilepsy 1.12 (0.84–1.45). The
+> verdicts (GGE-specific enrichment, focal null) are unchanged; cite Table 2 for numbers.
+
 | Phenotype | Enrichment ratio | z | Reading |
 |---|---|---|---|
 | **GGE** | **1.49** | 25.3 | strongly enriched |

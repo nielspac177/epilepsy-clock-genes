@@ -42,7 +42,9 @@ as such.
 distance-clumped at ±1 Mb (an approximation used because no linkage-disequilibrium reference panel
 was available), matched to the outcome by chromosome:position (not rsID, to avoid identifier
 mismatch), and harmonized to the exposure effect allele; palindromic and allele-incompatible
-variants were dropped. Instrument counts and Cochran's Q are reported per analysis.
+variants were dropped. Instrument counts and Cochran's Q are reported per analysis, and instrument
+strength (the relevance assumption) is quantified by the mean F-statistic per exposure set (all
+40–45, minimum F ≥29, exceeding the conventional F>10).
 
 **Estimators.** The primary estimator was inverse-variance weighting. Sensitivity estimators were
 MR-Egger (with an intercept test for directional pleiotropy), the weighted median, an MR-PRESSO-style
@@ -72,9 +74,13 @@ neighbours.
 ## Statistical reporting
 Enrichment significance is the matched-null empirical p; per-gene association is reported as nominal
 χ²/p without genome-wide correction beyond the gene-set test. MR effects are reported as β with 95%
-confidence intervals (β ± 1.96·SE). Colocalization is reported as posterior probabilities. No
-individual-level polygenic scoring or case–case classification was performed, as only summary
-statistics were available.
+confidence intervals (β ± 1.96·SE), on the log-odds scale of epilepsy per unit genetically-predicted
+exposure — per hour for sleep duration and per log-odds for the binary chronotype and short/long-
+sleep exposures — so magnitudes are not directly comparable across exposures. For the primary MR
+family (two exposures × two outcomes) a Bonferroni threshold (α = 0.05/4 = 0.0125) is applied; no MR
+result survives correction. Colocalization is reported as posterior probabilities. No individual-
+level polygenic scoring or case–case classification was performed, as only summary statistics were
+available.
 
 ## Reproducibility
 Inputs are referenced by accession and checksum; every result table regenerates deterministically
