@@ -1,0 +1,5 @@
+phenotype	k_dropped	worst_dropped_set	worst_ratio	worst_emp_p	still_sig_0.05
+generalized_gge	0	<none>	1.528	1.700e-03	YES
+generalized_gge	1	PER1	1.341	2.050e-02	YES
+generalized_gge	2	PER1+CSNK1E	1.231	6.529e-02	NO
+generalized_gge	3	PER1+CSNK1E+PER3	1.144	1.570e-01	NO

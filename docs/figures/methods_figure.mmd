@@ -9,20 +9,21 @@ flowchart TB
   %% Row 1 — Inputs (slate)
   G1["ILAE 2023 epilepsy GWAS<br/>focal · GGE · subtypes"]
   G2["Sleep-trait GWAS<br/>chronotype · sleep duration"]
-  G3["eQTLGen<br/>blood cis-eQTL"]
-  G4["PsychENCODE<br/>brain cis-eQTL"]
+  G3["eQTLGen / PsychENCODE / GTEx<br/>cis-eQTL · sQTL"]
+  G4["FinnGen R12<br/>independent GE · FE"]
   %% Row 2 — Analyses (teal)
-  A1["<b>Aim 1 · Gene-set enrichment</b><br/>LD-attenuated top-SNP vs<br/>10,000 matched-null sets"]
+  A1["<b>Aim 1 · Gene-set enrichment</b><br/>MAGMA competitive (LD-aware) +<br/>covariate-matched top-SNP null"]
   A2["<b>Aim 2 · Two-sample MR</b><br/>IVW + weighted median +<br/>Egger + PRESSO + Steiger"]
-  A3["<b>Aim 2b · cis-eQTL MR</b><br/>Wald ratio per clock gene"]
-  A4["<b>Aim 2c · Colocalization</b><br/>coloc.abf (brain)"]
+  A3["<b>Aim 2b · cis-MR + coloc + QTL</b><br/>coloc.abf (brain) · GTEx sQTL/eQTL"]
+  A4["<b>Replication</b><br/>same enrichment in FinnGen"]
   %% Row 3 — Findings (color = status)
-  R1["<b>✓ ENRICHED</b> — pending confirmation<br/>GGE ratio 1.53 (95% CI 1.05–2.04), p=1.7×10⁻³, anchored by intronic PER1<br/>focal: null<br/><i>set-level; some members co-located (KCNJ4, CAMTA1)</i>"]
+  R1["<b>✓ ENRICHED — MAGMA-confirmed</b><br/>GGE competitive P=1.7×10⁻⁴ (β 0.67); focal null P=0.73; housekeeping null<br/>robust to dropping PER1 (P=1.4×10⁻⁴); screen ratio 1.53, in-body 1.74<br/><i>specific to 23 core-oscillator genes; broad GO circadian null</i>"]
   R2["<b>✗ RULED OUT</b><br/>sleep-behaviour MR:<br/>no robust causal effect<br/>under any estimator"]
-  R3["<b>~ INCONCLUSIVE</b> · expression mechanism<br/>BMAL1 blood cis-MR retired;<br/>brain coloc underpowered<br/>— not refuted"]
-  %% Row 4 — caveat + conclusion
-  P["⏳ Pending confirmation<br/>LD-aware MAGMA · stratified-LDSC<br/>higher-powered brain eQTL"]
-  C["<b>Conclusion · European-ancestry</b><br/>Circadian involvement in GGE <b>appears</b> genetic &amp; gene-local<br/>(pending confirmation; rests on the PER1 locus)<br/>— not sleep behaviour, not steady-state expression —<br/><b>mechanism open</b>"]
+  R3["<b>~ PER1 anchor is pleiotropic</b><br/>PER1 splice-QTL (peripheral) but<br/>co-located VAMP2/CTC1 brain eQTL;<br/>causal gene unresolved; coloc null"]
+  R4["<b>✗ DID NOT REPLICATE</b><br/>FinnGen GE (1,690 cases):<br/>ratio 0.85, p=0.99<br/><i>power-/phenotype-limited</i>"]
+  %% Row 4 — pending + conclusion
+  P["⏳ Still open<br/>stratified-LDSC · larger independent<br/>GGE replication · PER1-vs-VAMP2 fine-mapping"]
+  C["<b>Conclusion · European-ancestry</b><br/>Core circadian-oscillator common-variant burden is <b>enriched in GGE</b> (not focal),<br/>LD-aware-confirmed but <b>not yet independently replicated</b><br/>— not sleep behaviour, not steady-state expression —<br/><b>causal gene &amp; mechanism open (PER1 vs co-located VAMP2)</b>"]
 
   G1 --> A1
   G1 --> A2
@@ -34,11 +35,12 @@ flowchart TB
   A1 --> R1
   A2 --> R2
   A3 --> R3
-  A4 --> R3
-  R1 -. pending .-> P
+  A4 --> R4
+  R1 -. still open .-> P
   R1 --> C
   R2 --> C
   R3 --> C
+  R4 --> C
 
   classDef inp fill:#eef2f7,stroke:#64748b,stroke-width:1px,color:#1f2937;
   classDef ana fill:#e6f0ef,stroke:#3f8f86,stroke-width:1.5px,color:#123b37;
@@ -52,5 +54,6 @@ flowchart TB
   class R1 pos;
   class R2 null;
   class R3 open;
+  class R4 null;
   class P pend;
   class C concl;

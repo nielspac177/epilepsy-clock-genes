@@ -1,0 +1,2 @@
+geneset	pheno_a	pheno_b	n_genes	ratio_a	ratio_b	delta	emp_p_2sided
+circadian	generalized_gge	focal_epilepsy	22	1.742	0.960	0.781	1.400e-03

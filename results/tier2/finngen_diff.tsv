@@ -1,0 +1,2 @@
+geneset	pheno_a	pheno_b	n_genes	ratio_a	ratio_b	delta	emp_p_2sided
+circadian	finngen_GE	finngen_FE	23	0.297	0.909	-0.612	1.454e-01

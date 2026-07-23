@@ -48,14 +48,31 @@ Effective N = 4/(1/N_case + 1/N_control), read from the ILAE per-marker `Effecti
 contains no UK Biobank, so overlap with the UKB-derived sleep exposures is minimal and biases MR
 toward the null (conservative).
 
-## Aim 1 — Circadian gene-set enrichment is GGE-specific
+## Aim 1 — Circadian core-oscillator enrichment is GGE-specific (MAGMA-confirmed)
 
-Using an LD-attenuated top-SNP-per-gene statistic (±50 kb; one approximately independent value per
-gene — a stand-in pending LD-aware MAGMA / stratified-LDSC confirmation) and a competitive test
-against 10,000 gene-length- and SNP-count-matched random gene sets, the 23 core clock genes were
-enriched for association in GGE but not focal epilepsy. *Table 2 uses this matched-null competitive
-test and supersedes the earlier mean-χ² screen in `docs/FINDINGS_realdata.md`; the verdicts and the
-headline p = 1.7×10⁻³ agree, and the ratio values here are the revised matched-null estimates.*
+**Primary test (LD-aware MAGMA).** Using MAGMA v1.10 with the 1000 Genomes European reference panel
+and a competitive gene-set test conditioning on gene size, gene density, sample size and inverse MAC
+(and their logs), the 23-gene core circadian oscillator was enriched in GGE (**P = 1.7×10⁻⁴**,
+β = 0.67; 22 genes tested — BHLHE40 had no SNP in the panel) and **null in focal epilepsy**
+(P = 0.73). A housekeeping set was null in both (0.86 / 0.35), and an epilepsy positive-control set
+behaved as expected. The enrichment is **robust to removing the strongest gene**: dropping PER1
+leaves P = 1.4×10⁻⁴ and dropping PER1+PER3 leaves P = 2.3×10⁻³ (Table 6). This LD-aware result
+supersedes the "pending confirmation" status of earlier drafts and directly addresses the gene-size,
+gene-density and within-gene-LD confounds; the covariate-matched top-SNP null below corroborates it.
+
+**Corroborating screen (covariate-matched top-SNP null).** With an LD-attenuated top-SNP-per-gene
+statistic (±50 kb) and a competitive test against 10,000 gene-length- and SNP-count-matched random
+gene sets, the same 23 genes were enriched in GGE but not focal (Table 2). Reported p-values are the
+median of 50 seeds (screen emp_p 1.9×10⁻³; single-seed range 8×10⁻⁴–2.7×10⁻³). The 95% interval on
+the ratio is an observed-set bootstrap divided by the null mean (sampling variability of the 23-gene
+mean), not a competitive-null tail interval. An **in-body-only** variant (no flank, which removes
+the co-located neighbour SNPs of §Table 3) is *stronger* (ratio 1.74, emp_p 1.7×10⁻³), and a
+robust **median** statistic remains significant (emp_p 4.0×10⁻³) — the signal is not an artefact of
+a few outlier genes or of window-based co-location. A formal shared-control difference test confirms
+GGE > focal (Δ ratio 0.55, 2-sided emp_p 3.1×10⁻³, 50-seed median). The enrichment is **specific to
+the 23 core oscillator genes**: the broad GO:0007623 set (185 genes) is only borderline (1.08,
+p=0.058) and not GGE-specific, and the 165 peripheral (non-core) circadian genes are null in GGE
+(1.02, p=0.32).
 
 ### Table 2. Circadian gene-set enrichment by phenotype
 
@@ -80,9 +97,53 @@ null focal result argues against a generic gene-size / brain-expression artefact
 | NPAS2 | rs4851386 | chr2:101,566,938 | 17.1 | 3.6×10⁻⁵ | intron_variant | NPAS2 | genuine |
 | NR1D2 | rs13321440 | chr3:23,988,556 | 12.2 | 4.8×10⁻⁴ | intron_variant | *NKIRAS1*/NR1D2 | nested-gene ambiguity |
 
-Per-gene, the set-level signal is anchored by a genome-wide-significant intronic **PER1** variant.
+Per-gene, the windowed screen is anchored by a genome-wide-significant intronic **PER1** variant.
 Some suggestive members map to non-clock neighbours (*KCNJ4*, *CAMTA1*), a limitation of
-window-based assignment (full listing in Supplement S1).
+window-based assignment that **LD-aware MAGMA corrects**: under MAGMA the CSNK1E signal is null
+(gene p = 0.40 — the KCNJ4 SNP is not credited to CSNK1E), while PER1 (7.9×10⁻⁷, genome-wide
+significant), PER3 (1.9×10⁻⁵) and ARNTL (5.6×10⁻⁴) retain genuine gene-body signal (full listing in
+Supplement S1).
+
+### Table 6. LD-aware MAGMA competitive gene-set analysis (GGE) and robustness
+
+| Gene set / test | n genes | β | P | Verdict |
+|---|---:|---:|---:|---|
+| **CIRCADIAN_CORE (GGE)** | 22 | 0.67 | **1.7×10⁻⁴** | enriched |
+| CIRCADIAN_CORE (focal) | 22 | −0.11 | 0.73 | null → GGE-specific |
+| CIRCADIAN_CORE, drop PER1 (GGE) | 21 | 0.73 | 1.4×10⁻⁴ | robust |
+| CIRCADIAN_CORE, drop PER1+PER3 (GGE) | 20 | 0.60 | 2.3×10⁻³ | robust |
+| HOUSEKEEPING (GGE) | 19 | −0.23 | 0.86 | null (calibration) |
+| POSITIVE_CONTROL (GGE) | 18 | 0.30 | 0.12 | ns (Mendelian genes; weak common-variant signal) |
+
+*MAGMA v1.10, 1000G EUR panel, conditioned on gene size, gene density, sample size, inverse MAC and
+their logs; one-sided competitive test. 99.1% of ILAE SNPs matched the reference. P = 1.7×10⁻⁴ is
+the competitive p; a simpler covariate-adjusted test reproduces β ≈ 0.68 at p ≈ 2–3×10⁻³.*
+
+### Table 7. Independent replication — FinnGen R12 (generalized epilepsy, 1,690 cases)
+
+| Cohort / test | Statistic | Enrichment | p | Verdict |
+|---|---|---|---:|---|
+| ILAE GGE (discovery, rank test) | percentile 0.62 | enriched | 0.033 | — |
+| **FinnGen GE, mean-χ²** | ratio 0.85 | not enriched | 0.99 | **non-replication** |
+| **FinnGen GE, rank test** | percentile 0.40 | not enriched | 0.99 | **non-replication** |
+| FinnGen GE_STRICT | ratio 0.96 / pctl 0.52 | not enriched | 0.71 / 0.49 | non-replication |
+
+*FinnGen GE is ~2× smaller (effective) than ILAE GGE, registry-phenotyped, and a population isolate;
+even the strongest established GGE loci attenuate sharply (VRK2 χ² 79→15, SCN1A →13). The
+non-replication is reported as power-/phenotype-limited, not a clean refutation. Mean-χ² and rank
+tests agree on clean data. (An earlier FinnGen parsing bug — since fixed, caches regenerated — is
+disclosed in `docs/FINDINGS_tier1-3.md`.)*
+
+### Mechanism at the PER1 locus (exploratory)
+
+rs2585398 is a strong **PER1 splice-QTL** peripherally (Artery_Tibial p = 6×10⁻²⁴; GTEx v8),
+consistent with the non-eQTL colocalization result (§Table 5) — i.e. a splicing, not steady-state
+expression, mechanism. However, 17p13.1 is gene-dense and the variant is also a **brain eQTL for
+VAMP2** (synaptobrevin-2; 10 brain regions; GTEx v10) and CTC1, so the causal gene is **unresolved**;
+VAMP2 is a biologically plausible but statistically undemonstrated (no colocalization) competing
+candidate. This locus-level ambiguity qualifies the *PER1 mechanism* only — the *set-level*
+enrichment is robust to dropping PER1 (Table 6). Exploratory JME- and GTCS-only analyses were null
+(underpowered; the signal is a pan-GGE property, not JME-specific).
 
 ## Aim 2 — No robust causal effect of sleep behaviour
 

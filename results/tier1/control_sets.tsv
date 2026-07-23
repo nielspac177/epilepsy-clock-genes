@@ -1,0 +1,9 @@
+phenotype	geneset	n_genes	obs	obs_lo	obs_hi	null_mean	null_lo	null_hi	ratio	ratio_lo	ratio_hi	emp_p
+generalized_gge	positive_control	20	9.171	6.674	12.300	7.311	5.678	9.505	1.254	0.913	1.682	3.970e-02
+generalized_gge	ion_channel	22	9.360	7.401	11.709	7.790	6.225	9.872	1.202	0.950	1.503	5.539e-02
+generalized_gge	housekeeping	38	7.116	5.621	8.859	6.306	5.027	7.937	1.128	0.891	1.405	1.379e-01
+generalized_gge	go_circadian	185	7.336	6.691	8.066	6.799	6.177	7.483	1.079	0.984	1.186	5.799e-02
+focal_epilepsy	positive_control	20	8.141	6.147	10.359	6.469	5.184	7.956	1.258	0.950	1.601	1.660e-02
+focal_epilepsy	ion_channel	22	8.224	6.738	10.146	7.045	5.778	8.506	1.167	0.956	1.440	5.309e-02
+focal_epilepsy	housekeeping	38	4.931	4.023	6.009	5.394	4.467	6.422	0.914	0.746	1.114	8.211e-01
+focal_epilepsy	go_circadian	185	6.300	5.821	6.833	5.941	5.510	6.394	1.060	0.980	1.150	6.019e-02

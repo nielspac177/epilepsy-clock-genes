@@ -14,15 +14,22 @@ pharmacoresistance (morbidity proxy) analysis.
 ![Methods overview — circadian-genetics × epilepsy-type analysis flow](docs/figures/methods_figure.png)
 
 ***Figure 1. Analysis overview.*** Public summary statistics (slate) feed four analyses (teal).
-Findings are colour-coded by **status**: 🟩 green = positive *but pending confirmation*; ⬜ grey =
-ruled out; 🟧 amber = inconclusive / open (dashed = pending analyses); 🟦 blue = conclusion. The
-GGE circadian gene-set enrichment (ratio 1.53, 95% CI 1.05–2.04, p = 1.7×10⁻³, focal null, anchored
-by an intronic *PER1* variant) is a matched-null result **pending LD-aware MAGMA / stratified-LDSC
-confirmation**; behavioural-sleep Mendelian randomization is a **robust null**; and the brain-eQTL
-colocalization is **underpowered/inconclusive — not a refutation** (the *BMAL1* blood cis-MR was
-retired). Editable source: [`docs/figures/methods_figure.mmd`](docs/figures/methods_figure.mmd)
-(rebuild with `npx @mermaid-js/mermaid-cli -i methods_figure.mmd -o methods_figure.png -s 2 -b white`).
-Reviewed by an adversarial visual + scientific-integrity audit before publication.
+Findings are colour-coded by **status**: 🟩 green = positive; ⬜ grey = ruled out; 🟧 amber =
+inconclusive / open; 🟦 blue = conclusion. The GGE circadian core-oscillator enrichment is now
+**confirmed by LD-aware MAGMA** (competitive P = 1.7×10⁻⁴, conditioning on gene size + density;
+focal null P = 0.73; housekeeping null; robust to dropping *PER1*, P = 1.4×10⁻⁴), corroborated by a
+covariate-matched top-SNP null (ratio 1.53, emp_p 1.9×10⁻³) and an in-body-only test (1.74). It is
+specific to the **23-gene core oscillator** (broad GO circadian annotation is null) and **did not
+replicate in FinnGen R12** (independent GE, 1,690 cases; power-limited, reported as a non-
+replication). Behavioural-sleep Mendelian randomization is a **robust null**; brain-eQTL
+colocalization is **underpowered/inconclusive** (the *BMAL1* blood cis-MR was retired); and the
+*PER1* anchor is **pleiotropic** (strong PER1 splice-QTL peripherally, but a co-located VAMP2/CTC1
+brain eQTL means the causal gene is unresolved). Full detail + honest caveats:
+[`docs/FINDINGS_tier1-3.md`](docs/FINDINGS_tier1-3.md). Editable figure source:
+[`docs/figures/methods_figure.mmd`](docs/figures/methods_figure.mmd) (rebuild with
+`npx @mermaid-js/mermaid-cli -i methods_figure.mmd -o methods_figure.png -s 2 -b white`). Every tier
+was checked by an adversarial agent team (which caught, among other things, a FinnGen parsing bug —
+now fixed).
 
 ## Scientific aims
 - **Aim 1** — Differential circadian gene-set involvement by type (MAGMA competitive + covariate-

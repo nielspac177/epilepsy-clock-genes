@@ -1,0 +1,2 @@
+phenotype	geneset	n_genes	obs	obs_lo	obs_hi	null_mean	null_lo	null_hi	ratio	ratio_lo	ratio_hi	emp_p
+generalized_gge	circadian	23	10.695	7.354	14.288	7.000	5.389	9.148	1.528	1.050	2.041	1.700e-03
