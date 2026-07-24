@@ -1,0 +1,6 @@
+gradient	spearman_r	p_spin	p_fdr
+sydnor2021:SAaxis	0.6547	0.0010	0.0010
+margulies2016:fcgradient01	0.6979	0.0010	0.0010
+hill2010:devexp	nan	nan	nan
+hill2010:evoexp	nan	nan	nan
+abagen:genepc1	nan	nan	nan
