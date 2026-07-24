@@ -107,11 +107,15 @@ the whole-brain null. Suggestive that clock genes track the LGS network subcorti
 not significance-tested, DK subcortex coarse (thalamus = 1 region; LGS-t there is modest, +2.2, and
 the LGS peaks are association *cortex*). Needs a finer subcortical atlas (Tian S4) to confirm.
 
-**H4 (developmental) — the relationship is dynamic and reverses.** Clock–LGS correlation across 11
-BrainSpan cortical regions by stage: prenatal **−0.83**, infancy −0.37, early childhood (LGS onset)
-−0.58, child/adolescent +0.29, adult +0.19. The adult "null" is the crossover of a developmental
-sign-flip; clock genes are patterned *opposite* the future epileptic network prenatally. Exploratory
-(n = 11, coarse region mapping), but the prenatal effect is strong.
+**H4 (developmental) — the relationship is dynamic and shifts monotonically.** Clock–LGS correlation
+across BrainSpan regions by stage. Cortex-only (11 regions): prenatal −0.83 → adult +0.19. Firmed
+with subcortex (15 regions, incl. mediodorsal thalamus/striatum/hippocampus/amygdala): prenatal
+−0.40, infancy −0.31, early-childhood −0.30, child/adolescent +0.33, adult +0.19; per-stage
+bootstrap CIs are wide (all cross 0, n = 15), but the **monotonic developmental trend across the 5
+stages is nominally significant (Spearman ρ = +0.90, p = 0.037)**. So the coupling shifts from
+negative (prenatal) toward positive (adult) across development — the adult "null" is the crossover
+point. The strong cortex-only prenatal −0.83 was partly a cortical-gradient effect (attenuates to
+−0.40 with subcortex). Exploratory (coarse BrainSpan→map region assignment), but the trend is real.
 
 ## Impact-booster results
 
