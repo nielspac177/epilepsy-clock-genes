@@ -150,12 +150,15 @@ contribution to GGE acts in **time** (global excitability rhythm), leaving no co
 fingerprint — coherent with the behavioural-MR and expression-coloc nulls.
 
 ## Environment-blocked (not a scientific limit)
-LDSC (genetic correlation + partitioned/stratified heritability, the README's long-pending item) could
-not run in this environment: system conda is broken (missing libarchive), classic bulik/ldsc needs
-Python 2.7 which will not build the old numpy/scipy on Apple Silicon, and the belowlab py3 fork has a
-broken git dependency and hangs on import. **The 3.1 GB LDSC reference (baselineLD v2.2, weights, frq,
-HM3) is downloaded to `tools/ldsc_ref/` and GGE is pre-munged (`results/ldsc/gge.sumstats.pre`, 4.86M
-SNPs)** — ready to run wherever a working LDSC install exists. coloc(GGE, chronotype) and the
+LDSC (genetic correlation + partitioned/stratified heritability, the README's long-pending item) is
+now **installable and importable** here: the belowlab py3 fork works once its deps are supplied
+(`modified-logger`, `rich_argparse`, `rich`, `xopen` into `.venv-neuro`); classic bulik/ldsc remains
+blocked (Python-2.7 / Apple-Silicon / broken system conda). The **3.1 GB reference (baselineLD v2.2,
+weights, frq, HM3) is in `tools/ldsc_ref/` and GGE is pre-munged** (`results/ldsc/gge.sumstats.pre`,
+4.86M SNPs). The only remaining obstacle was the host being at load-average ~300 (heavily
+oversubscribed, unrelated to this project), under which the multi-chromosome regression times out.
+On an unloaded machine: `PYTHONPATH=tools/ldsc/src .venv-neuro/bin/python -m ldsc.main` for munge →
+h² → partitioned h² with the downloaded reference. coloc(GGE, chronotype) and the
 multi-trait coloc likewise await the full chronotype/sleep GWAS + regional eQTL (not cleanly
 fetchable here).
 
