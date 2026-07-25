@@ -130,11 +130,34 @@ DK, n = 272) does not significantly track the LGS network (r = +0.14, p = 0.19),
 (r = +0.05), the transcriptional gradient, or PER1 — though it is *directionally* GGE-specific
 (GGE +0.14 vs all-epilepsy 0.00, TLE −0.03). GGE cortical-thickness effects are small, limiting power.
 
-**Emerging synthesis:** the imaging↔genetics *bridges* are consistently null (clock↔LGS, ENIGMA↔all),
-while the robust positives are the genetics core (MAGMA, fine-mapping, strict-core) and the LGS
-network's association-pole *developmental* positioning. Together these argue the circadian
-contribution to GGE is a **global/temporal** excitability effect that does **not** leave a cortical
-spatial-topography fingerprint — consistent with the behavioural-MR and expression-coloc nulls.
+**Neurochemical fingerprint (creative imaging) — null.** The LGS network was correlated with 14
+neuromaps PET/metabolism maps (GABA_A ×2, nicotinic/vesicular ACh, D1/D2 dopamine, SERT/5-HT1A/5-HT2A,
+mu-opioid, CB1, glucose metabolism, CBF), DK-parcellated, seeded-brainsmash spin null, FDR. **No
+neurotransmitter system is enriched** (GABA_A r = −0.06, p = 0.83; all receptors null). The only
+nominal signals are **cerebral blood flow (r = 0.33, p = 0.035) and glucose metabolism (r = 0.30,
+p = 0.10)** — hemodynamic/metabolic, co-varying with the association pole — and neither survives FDR.
+So the network-level E/I test is also null: the epileptic network is *not* defined by a receptor
+profile.
+
+**Emerging synthesis (now very consistent):** *every* molecular bridge to the LGS network is null —
+clock-gene expression, ENIGMA GGE atrophy, cell-type markers, and now the full neurotransmitter
+receptor fingerprint. The network is defined **only** by its macroscale organizational position
+(association/transmodal pole, high metabolism/CBF), not by any gene/cell-type/receptor signature.
+In parallel, the circadian genetics is robust (MAGMA, fine-mapping, strict-core) but spatially
+*uncoupled* from the network. Two clean, honest conclusions: (1) the LGS epileptic network is a
+**macroscale systems** phenomenon irreducible to a local molecular signature; (2) the circadian
+contribution to GGE acts in **time** (global excitability rhythm), leaving no cortical spatial
+fingerprint — coherent with the behavioural-MR and expression-coloc nulls.
+
+## Environment-blocked (not a scientific limit)
+LDSC (genetic correlation + partitioned/stratified heritability, the README's long-pending item) could
+not run in this environment: system conda is broken (missing libarchive), classic bulik/ldsc needs
+Python 2.7 which will not build the old numpy/scipy on Apple Silicon, and the belowlab py3 fork has a
+broken git dependency and hangs on import. **The 3.1 GB LDSC reference (baselineLD v2.2, weights, frq,
+HM3) is downloaded to `tools/ldsc_ref/` and GGE is pre-munged (`results/ldsc/gge.sumstats.pre`, 4.86M
+SNPs)** — ready to run wherever a working LDSC install exists. coloc(GGE, chronotype) and the
+multi-trait coloc likewise await the full chronotype/sleep GWAS + regional eQTL (not cleanly
+fetchable here).
 
 ## Still open
 - coloc(GGE, chronotype) at PER1 + LDSC rg — need the full sleep/chronotype GWAS.
