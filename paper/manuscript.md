@@ -249,9 +249,12 @@ causal gene remain open.
 
 ## Limitations
 
-The primary MAGMA result is now available (superseding the earlier top-SNP-only screen), but
-stratified LD-score regression — which would partition heritability rather than test a gene set — was
-not run. The signal has not replicated independently: the one biobank tested (FinnGen) was negative,
+The primary MAGMA result is now available (superseding the earlier top-SNP-only screen), and LD-score
+regression has since been run: GGE SNP-heritability is 0.091 (SE 0.004, intercept 1.058), and genetic
+correlation shows a specific overlap with short sleep duration (rg = −0.12, p = 0.002) but not
+chronotype. Cell-type/tissue-partitioned LDSC-SEG remains the one outstanding heritability analysis
+(the precomputed annotations were not retrievable in this environment). The signal has not replicated
+independently: the one biobank tested (FinnGen) was negative,
 and while power and phenotype differences plausibly explain this, replication in a larger,
 expert-classified GGE cohort is required before the finding can be considered established. At the lead
 locus, colocalization is absent/underpowered and the causal gene (*PER1* vs co-located *VAMP2*/*CTC1*)
