@@ -82,23 +82,22 @@ def main():
     # ---- fsaverage surfaces (shared by the LGS network + clock panels) ----
     fs = datasets.fetch_surf_fsaverage("fsaverage")
 
-    # ---- TOP: LGS network on the inflated surface (cold-hot t; L/R lateral + medial) ----
+    # ---- LGS network: 4 inflated-surface views, each to its own PNG (for aligned gridspec) ----
     lgs_img = nib.load(LGS_NII)
     texL = surface.vol_to_surf(lgs_img, fs["pial_left"], inner_mesh=fs["white_left"])
     texR = surface.vol_to_surf(lgs_img, fs["pial_right"], inner_mesh=fs["white_right"])
     tvmax = float(np.nanpercentile(np.abs(np.concatenate([texL, texR])), 97.5))
     tthr = 0.20 * tvmax
-    fL = plt.figure(figsize=(9.4, 2.5))
     for k, (h, v, tx) in enumerate([("left", "lateral", texL), ("left", "medial", texL),
                                     ("right", "medial", texR), ("right", "lateral", texR)]):
-        ax = fL.add_subplot(1, 4, k + 1, projection="3d")
+        f = plt.figure(figsize=(2.3, 2.3)); ax = f.add_subplot(111, projection="3d")
         plotting.plot_surf_stat_map(fs[f"infl_{h}"], np.nan_to_num(tx), hemi=h, view=v,
                                     cmap=nlcm.cold_hot, vmax=tvmax, threshold=tthr, colorbar=False,
-                                    bg_map=fs[f"sulc_{h}"], bg_on_data=True, axes=ax, figure=fL)
-        try: ax.set_box_aspect(None, zoom=1.5)
+                                    bg_map=fs[f"sulc_{h}"], bg_on_data=True, axes=ax, figure=f)
+        try: ax.set_box_aspect(None, zoom=1.4)
         except Exception: pass
-    fL.subplots_adjust(0, 0, 1, 1, wspace=-0.02)
-    fL.savefig(TMP / "lgs_surf.png", dpi=200, bbox_inches="tight", pad_inches=0); plt.close(fL)
+        f.subplots_adjust(0, 0, 1, 1)
+        f.savefig(TMP / f"lgs_{k}.png", dpi=200, bbox_inches="tight", pad_inches=0); plt.close(f)
 
     # ---- clock surfaces per stage (left lateral), diverging, no per-panel colorbar ----
     rows = pd.read_csv("data/raw/brainspan/rows_metadata.csv")
@@ -135,23 +134,31 @@ def main():
     fig = plt.figure(figsize=(10.5, 9.3))
     gs = fig.add_gridspec(3, 1, height_ratios=[0.9, 1.3, 0.82], hspace=0.55)
 
-    # A: LGS network surface (4 views) + t colorbar
-    gsA = gs[0].subgridspec(1, 2, width_ratios=[1, 0.035], wspace=0.01)
-    axA = fig.add_subplot(gsA[0]); axA.imshow(mpimg.imread(TMP / "lgs_surf.png")); axA.axis("off")
-    axA.set_title("A   The Lennox–Gastaut epileptic network  (EEG-fMRI during generalized paroxysmal fast activity)",
-                  loc="left", fontsize=12, fontweight="bold")
+    # A: LGS network — 4 surface views + t colorbar (brain area + colorbar aligned with panel B)
+    gsA = gs[0].subgridspec(1, 2, width_ratios=[1, 0.03], wspace=0.015)
+    gsAb = gsA[0].subgridspec(1, 4, wspace=0.0)
+    a_axes = []
+    for k in range(4):
+        ax = fig.add_subplot(gsAb[k]); ax.imshow(mpimg.imread(TMP / f"lgs_{k}.png")); ax.axis("off")
+        a_axes.append(ax)
     caxA = fig.add_subplot(gsA[1])
     cbA = fig.colorbar(ScalarMappable(Normalize(-tvmax, tvmax), nlcm.cold_hot), cax=caxA)
     cbA.set_label("network t", fontsize=9); cbA.ax.tick_params(labelsize=8)
-    axA.text(0.5, -0.04, "yellow/red = BOLD increase during epileptic discharges;  blue = decrease. "
-             "Inflated cortical surface (thalamic/brainstem hubs are subcortical, not shown).",
-             transform=axA.transAxes, ha="center", fontsize=8.5, color="#444")
+    top_a = max(a.get_position().y1 for a in a_axes)
+    bot_a = min(a.get_position().y0 for a in a_axes)
+    fig.text(0.09, top_a + 0.02,
+             "A   The Lennox–Gastaut epileptic network  (EEG-fMRI during generalized paroxysmal fast activity)",
+             fontsize=12, fontweight="bold", va="bottom")
+    fig.text(0.5, bot_a - 0.005, "yellow/red = BOLD increase during epileptic discharges;  blue = "
+             "decrease.  Inflated cortical surface (thalamic/brainstem hubs are subcortical, not shown).",
+             ha="center", va="top", fontsize=8.5, color="#444")
 
-    # B: clock surfaces row
-    gsB = gs[1].subgridspec(1, 6, width_ratios=[1, 1, 1, 1, 1, 0.12], wspace=0.04)
+    # B: clock surfaces — 5 views + z colorbar (same brain-area + colorbar geometry as A)
+    gsB = gs[1].subgridspec(1, 2, width_ratios=[1, 0.03], wspace=0.015)
+    gsBb = gsB[0].subgridspec(1, 5, wspace=0.04)
     b_axes = []
     for j, (key, label) in enumerate(STAGES):
-        ax = fig.add_subplot(gsB[j]); ax.imshow(mpimg.imread(TMP / f"clock_{key}.png")); ax.axis("off")
+        ax = fig.add_subplot(gsBb[j]); ax.imshow(mpimg.imread(TMP / f"clock_{key}.png")); ax.axis("off")
         ax.set_title(label, fontsize=10.5, fontweight="bold"); b_axes.append(ax)
         r = stage_r[key]; p = stage_p[key]; col = NEG if r < 0 else POS
         pstr = ("p < 0.001" if p < 0.001 else (f"p = {p:.3f}" if p < 0.01 else f"p = {p:.2f}")) \
@@ -159,12 +166,12 @@ def main():
         ax.text(0.5, -0.03, f"r = {r:+.2f}\n{pstr}", transform=ax.transAxes, ha="center", va="top",
                 fontsize=9.5, fontweight="bold", color=col,
                 bbox=dict(boxstyle="round,pad=0.28", fc="white", ec=col, lw=1.3))
-    caxB = fig.add_subplot(gsB[5])
+    caxB = fig.add_subplot(gsB[1])
     cb = fig.colorbar(ScalarMappable(Normalize(-CLK_VMAX, CLK_VMAX), CLK_CMAP), cax=caxB)
     cb.set_label("clock-gene expression (z)", fontsize=9); cb.set_ticks([-2, 0, 2])
     cb.ax.tick_params(labelsize=8)
     top_b = max(a.get_position().y1 for a in b_axes)
-    fig.text(0.09, top_b + 0.085, "B   Clock-gene cortical expression by developmental stage",
+    fig.text(0.09, top_b + 0.075, "B   Clock-gene cortical expression by developmental stage",
              fontsize=12, fontweight="bold", va="bottom")
 
     # C: trajectory
