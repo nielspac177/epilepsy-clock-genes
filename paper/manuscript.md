@@ -182,6 +182,43 @@ enrichment is robust to dropping *PER1* (above), this locus-level ambiguity qual
 interpretation without undermining the gene-set result. Exploratory subtype analyses (JME, GTCS-only)
 were null and underpowered; the signal is a pan-GGE property.
 
+### Extended analyses — genetic correlation, PER1 colocalization, and the LGS receptor fingerprint
+
+*(Numbers below were independently recomputed by an adversarial verification team; full tables and
+figures in `docs/RESULTS_final.md`.)*
+
+**SNP heritability and genetic correlation (LDSC).** Under univariate LD Score regression
+(eur_w_ld_chr), GGE observed-scale SNP-heritability was 0.091 (SE 0.004) with an intercept of 1.058,
+indicating minimal confounding. The pipeline's positive control behaved as expected —
+rg(GGE, focal) = 0.61 (p = 2×10⁻¹⁶), reflecting the substantial shared architecture (and shared
+ILAE controls) of the two epilepsy types. Against full genome-wide sleep-trait GWAS (Jones 2019
+chronotype; Dashti 2019 sleep duration), GGE showed a **significant negative genetic correlation with
+habitual sleep duration** (rg = −0.12, p = 0.0022; Bonferroni-significant across the four primary
+sleep-trait tests) that was **specific to GGE** (focal rg = −0.03, p = 0.70). By contrast, GGE was
+genetically **uncorrelated with chronotype** (rg = 0.02, p = 0.47). The circadian–epilepsy genetic
+link therefore lies on the sleep-homeostatic axis (duration), not the behavioural-preference axis
+(chronotype) — consistent with sleep deprivation as a classical generalized-seizure trigger, and with
+the null behavioural Mendelian randomization for chronotype.
+
+**Locus-level colocalization at PER1.** A two-GWAS colocalization at 17p13.1 showed that GGE and
+chronotype are **both associated in the region but through distinct causal variants**
+(coloc.abf PP.H3 = 0.9997; PP.H4 = 5×10⁻⁶). Extending to a three-trait analysis (GGE + chronotype +
+PsychENCODE PER1 *cis*-eQTL), the posterior probability that a single shared variant drives all three
+was ≈0 and the probability of three independent signals was 0.97. Even at the anchor gene, the
+circadian–epilepsy relationship is not a shared regulatory variant.
+
+**A receptor-specific excitation/inhibition fingerprint of the LGS network.** Across 68 neuromaps
+annotations (spin-test nulls, FDR within family), the LGS EEG-fMRI network overlapped a pre-registered
+excitation/inhibition receptor family: glutamatergic mGluR5 (ABP688, r = 0.54 across three tracers,
+FDR = 0.0015) and GABA-A/benzodiazepine density (Ro15-4513 r = 0.42; flumazenil r = 0.37). Because the
+network's single strongest correlate was the principal cortical gradient (r = 0.70), each receptor was
+re-tested with the gradient partialled out; mGluR5 (partial r = 0.49, p < 0.001), both GABA-A/BZ
+tracers (p = 0.016–0.019) and glucose metabolism (p < 0.001) **survived**, whereas cortical myelin did
+not (gradient-driven). The LGS network thus carries a genuine, gradient-independent E/I receptor
+signature — into which, notably, circadian clock-gene expression does **not** map (Phase D nulls). The
+circadian contribution to generalized epilepsy is genetic and temporal, not a feature of the epileptic
+network's cortical-molecular topography.
+
 ## Discussion
 
 Three lines of evidence converge on a specific, defensible conclusion: under a gold-standard LD-aware

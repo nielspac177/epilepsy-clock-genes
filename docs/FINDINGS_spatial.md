@@ -149,20 +149,33 @@ In parallel, the circadian genetics is robust (MAGMA, fine-mapping, strict-core)
 contribution to GGE acts in **time** (global excitability rhythm), leaving no cortical spatial
 fingerprint — coherent with the behavioural-MR and expression-coloc nulls.
 
-## Environment-blocked (not a scientific limit)
-LDSC (genetic correlation + partitioned/stratified heritability, the README's long-pending item) is
-now **installable and importable** here: the belowlab py3 fork works once its deps are supplied
-(`modified-logger`, `rich_argparse`, `rich`, `xopen` into `.venv-neuro`); classic bulik/ldsc remains
-blocked (Python-2.7 / Apple-Silicon / broken system conda). The **3.1 GB reference (baselineLD v2.2,
-weights, frq, HM3) is in `tools/ldsc_ref/` and GGE is pre-munged** (`results/ldsc/gge.sumstats.pre`,
-4.86M SNPs). The only remaining obstacle was the host being at load-average ~300 (heavily
-oversubscribed, unrelated to this project), under which the multi-chromosome regression times out.
-On an unloaded machine: `PYTHONPATH=tools/ldsc/src .venv-neuro/bin/python -m ldsc.main` for munge →
-h² → partitioned h² with the downloaded reference. coloc(GGE, chronotype) and the
-multi-trait coloc likewise await the full chronotype/sleep GWAS + regional eQTL (not cleanly
-fetchable here).
+## LGS receptor fingerprint + gradient-controlled specificity (RESOLVED, new)
+Across 68 neuromaps annotations (spin nulls, FDR within family; `results/neuromaps_battery/`), the
+LGS network is **not** molecularly featureless. A pre-registered E/I receptor family is significant:
+mGluR5 (ABP688) r=0.54 (FDR 0.0015, 3 tracers), GABA-A/BZ Ro15-4513 r=0.42, flumazenil (dukart)
+r=0.37; norgaard flumazenil n.s. (disclosed, 2-of-3 tracers). Because LGS's top correlate is the
+principal gradient (fcgradient01 r=0.70), each receptor was re-tested **partialling out the gradient**
+(`lgs_partial_gradient.tsv`): mGluR5 partial r=0.49 (p<0.001), both GABA-A/BZ (p=0.016–0.019) and
+CMRglc (p<0.001) **survive**; myelin does **not** (gradient-driven). So the E/I receptor signature is
+receptor-specific, and clock-gene expression is the thing that is *absent* from an otherwise rich
+molecular fingerprint — the circadian link is temporal/genetic, not cortical-topographic.
 
-## Still open
-- coloc(GGE, chronotype) at PER1 + LDSC rg — need the full sleep/chronotype GWAS.
-- LDSC partitioned heritability (GGE + baselineLD) — feasible without sleep data.
+## LDSC + colocalization (RESOLVED)
+Local venvs were **rebuilt off iCloud** (`~/.epicirc-venv` LDSC, `~/.epicirc-neuro` neuromaps) — the
+long-standing eviction problem is gone. Real results (all adversarially re-verified):
+- GGE SNP-h²(obs)=0.091 (SE 0.004), intercept 1.058; partitioned baselineLD category enrichments.
+- **rg(GGE, sleep-duration)=−0.12 (p=0.0022, GGE-specific)**; rg(GGE, focal)=0.61 (control);
+  rg(GGE, chronotype) null. Full Jones-2019/Dashti-2019 GWAS fetched from GWAS Catalog.
+- coloc(GGE, chronotype)@PER1 PP.H3=0.9997 (distinct variants); moloc none-shared=0.97.
+
+## Still blocked (environment, not science)
+- **LDSC-SEG** tissue/cell-type h² — the precomputed SEG annotations (alkesgroup bucket) return 404
+  and are not on the S-LDSC zenodo mirror; not fetchable here.
+- **MEG delta/theta** neuromaps maps (fsLR-4k) need Connectome Workbench (`wb_command`); cask install
+  failed. The one a-priori comparison not run.
+
+## Still open (optional, feasible next round)
+- Schaefer-400 re-test of the headline spatial signs (DK-atlas robustness).
+- Clock-gene AHBA map vs the full neuromaps battery (does circadian expression align with *any*
+  canonical map).
 - H2 with a fine subcortical atlas (Tian S4); H4 with the mediodorsal thalamus + spatial nulls.
