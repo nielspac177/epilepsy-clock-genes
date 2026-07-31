@@ -18,10 +18,17 @@ See docs/figure_style_notes.md for the paper choices this reproduces.
 from __future__ import annotations
 
 from ._base import RenderResult, symmetric_limits
-from .cerebellum import map_to_flatmap, plot_map_flatmap
 from .colormaps import auto_threshold, lnm_cold_hot, resolve_cmap
-from .combine import combine_surface_flatmap
 from .surface import plot_map_surface, project_to_fsaverage
+
+# Cerebellar flatmap (SUITPy) is optional: cortical-surface rendering must work without it.
+try:
+    from .cerebellum import map_to_flatmap, plot_map_flatmap
+    from .combine import combine_surface_flatmap
+    _HAS_CEREBELLUM = True
+except ModuleNotFoundError:  # SUITPy not installed
+    map_to_flatmap = plot_map_flatmap = combine_surface_flatmap = None
+    _HAS_CEREBELLUM = False
 
 __all__ = [
     "plot_map_surface",

@@ -1,0 +1,5 @@
+[fetch_surf_fsaverage] Dataset directory found: /Users/nielspacheco/nilearn_data/fsaverage
+wrote figures/fig_lgs_surface.png
+clock panel skipped: No module named 'pkg_resources'
+wrote figures/fig_gaba_surface.png
+wrote figures/fig_rg_forest.png

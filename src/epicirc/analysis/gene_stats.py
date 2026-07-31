@@ -11,20 +11,12 @@ window-sensitivity grid regenerates one cache per flank (still cheap vs. re-scan
 from __future__ import annotations
 
 import argparse
-import gzip
 import sys
 from bisect import bisect_left, bisect_right
 from collections import defaultdict
 from pathlib import Path
 
 IL = {"CHR": 0, "BP": 1, "Z": 8}  # ILAE .tbl 0-based: CHR, BP, ..., Z-score at col 8
-# FinnGen R12: #chrom pos ref alt rsids nearest_genes pval mlogp beta sebeta af_alt ... -> Z=beta/sebeta
-FG = {"CHR": 0, "BP": 1, "BETA": 8, "SE": 9, "AF": 10}
-FG_MAF_MIN = 0.01   # drop rare variants: tiny-SE rare imputed markers inflate beta/sebeta absurdly
-
-
-def _open(path):
-    return gzip.open(path, "rt") if str(path).endswith(".gz") else open(path)
 
 
 def load_genes(path: str):
@@ -47,35 +39,21 @@ def load_genes(path: str):
     return by_chr, meta
 
 
-def index_snps(tbl: str, keep_chr, source="ilae"):
+def index_snps(tbl: str, keep_chr):
     pos_by_chr = defaultdict(list)
     chi_by_chr = defaultdict(list)
-    with _open(tbl) as fh:
+    with open(tbl) as fh:
         next(fh)
         for ln in fh:
-            # FinnGen is TAB-delimited with empty fields (rsID-less indels leave an empty rsids
-            # column); whitespace split() would collapse the empty field and shift every later
-            # column left, corrupting beta/sebeta/af. Must split on tab. ILAE .tbl has no empty
-            # fields, so its whitespace split is safe and preserved (bit-identical reproduction).
-            f = ln.rstrip("\n").split("\t") if source == "finngen" else ln.split()
+            f = ln.split()
             if len(f) < 10:
                 continue
-            c = f[IL["CHR"]].replace("chr", "")
+            c = f[IL["CHR"]]
             if c not in keep_chr:
                 continue
             try:
-                bp = int(f[FG["BP"] if source == "finngen" else IL["BP"]])
-                if source == "finngen":
-                    af = float(f[FG["AF"]])
-                    if af < FG_MAF_MIN or af > 1 - FG_MAF_MIN:
-                        continue
-                    se = float(f[FG["SE"]])
-                    if se == 0:
-                        continue
-                    z = float(f[FG["BETA"]]) / se
-                else:
-                    z = float(f[IL["Z"]])
-            except (ValueError, ZeroDivisionError):
+                bp = int(f[IL["BP"]]); z = float(f[IL["Z"]])
+            except ValueError:
                 continue
             pos_by_chr[c].append(bp)
             chi_by_chr[c].append(z * z)
@@ -86,10 +64,10 @@ def index_snps(tbl: str, keep_chr, source="ilae"):
     return pos_by_chr, chi_by_chr
 
 
-def compute(tbl: str, genes_path: str, flank_kb: int, source="ilae"):
+def compute(tbl: str, genes_path: str, flank_kb: int):
     flank = flank_kb * 1000
     by_chr, meta = load_genes(genes_path)
-    pos_by_chr, chi_by_chr = index_snps(tbl, set(by_chr), source)
+    pos_by_chr, chi_by_chr = index_snps(tbl, set(by_chr))
     rows = []
     for c, windows in by_chr.items():
         pos, chi = pos_by_chr.get(c, []), chi_by_chr.get(c, [])
@@ -114,11 +92,10 @@ def main(argv=None) -> int:
     ap.add_argument("--outcome", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--flank-kb", type=int, default=50)
-    ap.add_argument("--source", choices=["ilae", "finngen"], default="ilae")
     args = ap.parse_args(argv)
 
-    print(f"[gene_stats] scanning {args.outcome} (flank {args.flank_kb}kb, {args.source}) ...", file=sys.stderr)
-    rows = compute(args.outcome, args.genes, args.flank_kb, args.source)
+    print(f"[gene_stats] scanning {args.outcome} (flank {args.flank_kb}kb) ...", file=sys.stderr)
+    rows = compute(args.outcome, args.genes, args.flank_kb)
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w") as fh:
