@@ -139,6 +139,12 @@ expression is spatially **anti-correlated** with the region that later becomes t
 that coupling weakens, crosses zero, and is weakly positive by adulthood. The adult clock↔LGS null
 (2.2) is therefore the **crossover point** of a real trajectory, not a static absence.
 
+![Developmental sign-flip](../figures/fig_developmental_signflip.png)
+
+*Clock-gene expression (left) vs the fixed adult LGS network (right), by developmental stage, with
+the per-stage correlation. The pattern goes from opposed (prenatal: clock high where LGS low) toward
+aligned by adulthood; the trajectory panel shows the monotonic flip.*
+
 > **Guardrails:** exploratory — per-stage bootstrap CIs are wide (all cross 0, n = 15), the
 > BrainSpan→map assignment is coarse, and p = 0.037 is uncorrected. A neurodevelopmental lead
 > requiring a finer subcortical atlas (Tian S4) + mediodorsal thalamus to confirm.

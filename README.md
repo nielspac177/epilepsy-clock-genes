@@ -52,6 +52,13 @@ layout — but developmentally (strongest before birth) rather than as an ongoin
   exploratory (n = 15 regions, wide per-stage CIs, uncorrected): a neurodevelopmental lead, not a
   firm claim.
 
+![Circadian × epileptic-network coupling flips sign across development](figures/fig_developmental_signflip.png)
+
+*Clock-gene expression (left) against the fixed adult LGS network (right), by developmental stage.
+Early on, clock expression is high where the future seizure network is low (anticorrelation, red);
+that coupling weakens, crosses zero, and is weakly positive by adulthood (green). Cortical surface at
+BrainSpan-region resolution; the trend firms to ρ = 0.90, p = 0.037 once subcortex is included.*
+
 Full tables, figures, and the adversarial guardrails: [`docs/RESULTS_final.md`](docs/RESULTS_final.md).
 A submission-ready manuscript (`.docx`, `.pdf`, and an Overleaf `.zip`) is in `submission/`.
 
