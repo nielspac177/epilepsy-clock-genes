@@ -141,9 +141,10 @@ that coupling weakens, crosses zero, and is weakly positive by adulthood. The ad
 
 ![Developmental sign-flip](../figures/fig_developmental_signflip.png)
 
-*Clock-gene expression (left) vs the fixed adult LGS network (right), by developmental stage, with
-the per-stage correlation. The pattern goes from opposed (prenatal: clock high where LGS low) toward
-aligned by adulthood; the trajectory panel shows the monotonic flip.*
+*(A) The LGS network on MNI slices (cold–hot t: red/yellow = BOLD increase during discharges, blue =
+decrease; deep hubs visible). (B) Clock-gene cortical expression at five stages (blue–red z), each
+labelled with its correlation to the network. (C) The monotonic sign-flip from prenatal
+anticorrelation toward adult near-zero.*
 
 > **Guardrails:** exploratory — per-stage bootstrap CIs are wide (all cross 0, n = 15), the
 > BrainSpan→map assignment is coarse, and p = 0.037 is uncorrected. A neurodevelopmental lead

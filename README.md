@@ -54,10 +54,12 @@ layout — but developmentally (strongest before birth) rather than as an ongoin
 
 ![Circadian × epileptic-network coupling flips sign across development](figures/fig_developmental_signflip.png)
 
-*Clock-gene expression (left) against the fixed adult LGS network (right), by developmental stage.
-Early on, clock expression is high where the future seizure network is low (anticorrelation, red);
-that coupling weakens, crosses zero, and is weakly positive by adulthood (green). Cortical surface at
-BrainSpan-region resolution; the trend firms to ρ = 0.90, p = 0.037 once subcortex is included.*
+*(A) The LGS epileptic network (EEG-fMRI during generalized paroxysmal fast activity; red/yellow =
+BOLD increase during discharges, blue = decrease). (B) Mean clock-gene cortical expression at five
+developmental stages (blue = below-average, red = above-average, z), each labelled with its
+correlation to the network. (C) The correlation flips monotonically from prenatal anticorrelation
+toward adult near-zero. Cortical surface at BrainSpan-region resolution; firms to ρ = 0.90,
+p = 0.037 with subcortex. Exploratory.*
 
 Full tables, figures, and the adversarial guardrails: [`docs/RESULTS_final.md`](docs/RESULTS_final.md).
 A submission-ready manuscript (`.docx`, `.pdf`, and an Overleaf `.zip`) is in `submission/`.
