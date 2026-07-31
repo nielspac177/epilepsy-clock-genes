@@ -117,6 +117,29 @@ So clock-gene expression has a modest molecular topography of its own — it sim
 the LGS network's** (mGluR5/metabolic) topography. The circadian–epilepsy link is not written in the
 shared cortical distribution of these two maps.
 
+### 2.3 Developmental dynamics — the adult null is a crossover, not a flat line
+
+Correlating clock-gene expression with the LGS network across BrainSpan developmental stages
+(`FINDINGS_spatial.md`, H4), the relationship **flips sign monotonically across development**:
+
+| Stage | Clock–LGS r (15 regions incl. subcortex) |
+|:--|--:|
+| Prenatal | −0.40 (cortex-only −0.83) |
+| Infancy | −0.31 |
+| Early childhood | −0.30 |
+| Child/adolescent | +0.33 |
+| Adult | +0.19 |
+
+The trend across the five stages is nominally significant (Spearman **ρ = 0.90, p = 0.037**). Early
+in development — when clock genes are highly expressed and cortex is being wired — circadian
+expression is spatially **anti-correlated** with the region that later becomes the epileptic network;
+that coupling weakens, crosses zero, and is weakly positive by adulthood. The adult clock↔LGS null
+(2.2) is therefore the **crossover point** of a real trajectory, not a static absence.
+
+> **Guardrails:** exploratory — per-stage bootstrap CIs are wide (all cross 0, n = 15), the
+> BrainSpan→map assignment is coarse, and p = 0.037 is uncorrected. A neurodevelopmental lead
+> requiring a finer subcortical atlas (Tian S4) + mediodorsal thalamus to confirm.
+
 > **Guardrails (adversarial):** p_spin = 0.001 is the 1000-permutation floor → reported as
 > "<0.001". The norgaard flumazenil tracer is non-significant; GABA-A/BZ evidence is 2-of-3
 > tracers. Receptor overlaps are correlational (spatial), now shown gradient-independent.
@@ -154,8 +177,41 @@ excitation/inhibition receptor signature, into which circadian expression does n
 
 ---
 
+## Conclusion
+
+**Technical.** Under a gold-standard LD-aware test the common-variant burden of the 23-gene core
+circadian oscillator is enriched in genetic generalized epilepsy and null in focal epilepsy, robust
+to dropping the lead gene and specific to the oscillator core. It is corroborated by genetic
+correlation — GGE shares heritability with short sleep duration (rg = −0.12, p = 0.002) but not
+chronotype, GGE-specific (focal null) with a validated positive control (rg[GGE, focal] = 0.61) — and
+is not explained by a causal effect of sleep behaviour (MR null), a shared causal variant at PER1
+(coloc H3 = 0.9997; moloc 0.97 posterior of three independent signals), or the cortical distribution
+of clock-gene expression (clock↔LGS spatial null, adequately powered). The epileptic network carries
+a reproducible molecular signature — glutamatergic mGluR5 density and glucose metabolism, surviving
+gradient control and Schaefer-400 re-parcellation — into which circadian expression does not map in
+the adult brain. Development is the exception: the clock↔network correlation shifts monotonically from
+prenatal anticorrelation to adult near-zero (ρ = 0.90, p = 0.037). Net: a robust, type-specific,
+set-level circadian enrichment acting through sleep-homeostatic genetics and developmental timing,
+not through the mature epileptic network's molecular topography. Independent replication and the PER1
+causal gene (clock *PER1* vs synaptic *VAMP2*) remain open.
+
+**For clinicians and imagers.** The body-clock genes overlap with generalized epilepsy through
+*sleep* — specifically how much sleep the brain needs, not whether a person is a morning or evening
+type. That matches the clinic, where sleep deprivation is a classic generalized-seizure trigger; here
+it has a genetic basis, present in generalized but not focal epilepsy. This is shared genetics, not
+proof that changing someone's sleep schedule stops seizures. On imaging, the generalized
+(Lennox–Gastaut) seizure network sits where the cortex is rich in excitatory glutamate (mGluR5)
+receptors and burns the most glucose — a signature that holds across atlases — while maps of
+clock-gene expression do not line up with that network in the adult brain. In the developing brain
+they do, in reverse: before birth, clock-gene expression is highest where the future seizure network
+is lowest, and that inverse arrangement unwinds with maturation. So the clock's influence on
+generalized epilepsy reads as something wired in early and expressed through sleep biology, rather
+than a receptor or circuit you would see co-localized on an adult scan. Sleep duration is the lever
+with genetic support; chronotype and any single "clock gene in the network" are not.
+
 ## Limitations
 - rg reflects genetic overlap, not causation; sleep-duration effect is modest (rg −0.12).
+- The developmental sign-flip (ρ = 0.90, p = 0.037) is exploratory (n = 15, wide CIs, uncorrected).
 - The GABA-A/benzodiazepine spatial overlap is **not robust** to parcellation (fails Schaefer-400 +
   variogram); only mGluR5 and metabolism reproduce across atlas and null family.
 - The clock↔LGS null is adequately powered (80% power for |r| ≥ 0.31) — an informative absence.

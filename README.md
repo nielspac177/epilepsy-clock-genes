@@ -41,9 +41,52 @@ sleeps, not through where the epileptic network sits in the cortex.
   check, so it is reported as suggestive only. Clock-gene expression has its own modest cortical
   topography yet maps onto neither the LGS network (an informative null: 80% power for |r| ≥ 0.31)
   nor the mGluR5 signature.
+- **The circadian–network coupling flips sign across development.** Correlating clock-gene expression
+  with the LGS network across BrainSpan developmental stages, the relationship runs from prenatal
+  anticorrelation (r = −0.40, or −0.83 in cortex alone) through a childhood crossover to weakly
+  positive in adulthood; the monotonic trend across the five stages is nominally significant
+  (Spearman ρ = 0.90, p = 0.037). The adult "null" above is that crossover point — so the absence of
+  a clock–network map in the mature brain sits on top of a real developmental trajectory. This one is
+  exploratory (n = 15 regions, wide per-stage CIs, uncorrected): a neurodevelopmental lead, not a
+  firm claim.
 
 Full tables, figures, and the adversarial guardrails: [`docs/RESULTS_final.md`](docs/RESULTS_final.md).
 A submission-ready manuscript (`.docx`, `.pdf`, and an Overleaf `.zip`) is in `submission/`.
+
+## Conclusion
+
+**Technical.** Under a gold-standard LD-aware test the common-variant burden of the 23-gene core
+circadian oscillator is enriched in genetic generalized epilepsy and null in focal epilepsy, robust
+to dropping the lead gene and specific to the oscillator core. That genetic signal is corroborated at
+the level of genetic correlation — GGE shares heritability with short sleep duration (rg = −0.12,
+p = 0.002) but not chronotype, and the finding is GGE-specific (focal null) with a validated positive
+control (rg[GGE, focal] = 0.61). It is *not* explained by a causal effect of sleep behaviour
+(behavioural MR null), by a shared causal variant at the PER1 locus (coloc H3 = 0.9997, distinct
+variants; three-trait moloc: 0.97 posterior of independent signals), or by the cortical distribution
+of clock-gene expression (clock↔LGS spatial null, adequately powered). The epileptic network does
+carry a reproducible molecular signature — glutamatergic mGluR5 density and glucose metabolism,
+surviving gradient control and a Schaefer-400 re-parcellation — but circadian expression is not part
+of it in the adult brain. The one place the temporal/spatial separation softens is development: the
+clock↔network correlation shifts monotonically from prenatal anticorrelation to adult near-zero
+(ρ = 0.90, p = 0.037). The defensible estimand-level statement is a robust, type-specific, set-level
+circadian enrichment that acts through sleep-homeostatic genetics and developmental timing rather
+than through the mature epileptic network's molecular topography; independent replication and
+resolution of the PER1 causal gene (clock *PER1* vs synaptic *VAMP2*) remain open.
+
+**For clinicians and imagers.** The body-clock genes overlap with generalized epilepsy through
+*sleep*, and specifically through how much sleep the brain needs — not through whether someone is a
+morning or an evening person. That fits the clinic: sleep deprivation is a classic trigger for
+generalized seizures, and here it has a genetic basis, seen in generalized but not focal epilepsy.
+It is a shared-genetics link, not proof that shifting someone's sleep schedule prevents seizures.
+On the imaging side, the generalized (Lennox–Gastaut) seizure network lights up where the cortex is
+rich in excitatory glutamate (mGluR5) receptors and burns the most glucose — an excitation/metabolism
+signature that holds up across atlases. Maps of clock-gene expression do *not* line up with that
+network in the adult brain. But in the developing brain they do relate to it, in reverse: before
+birth, clock-gene expression is highest exactly where the future seizure network is lowest, and that
+inverse arrangement unwinds as the brain matures. The practical reading: the clock's influence on
+generalized epilepsy looks like something wired in early and expressed through sleep biology, rather
+than a receptor or circuit you would see co-localized on an adult scan. Sleep duration is the lever
+with genetic support; chronotype and a single "clock gene in the network" are not.
 
 ## Study design
 
