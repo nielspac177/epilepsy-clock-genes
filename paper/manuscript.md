@@ -212,12 +212,17 @@ annotations (spin-test nulls, FDR within family), the LGS EEG-fMRI network overl
 excitation/inhibition receptor family: glutamatergic mGluR5 (ABP688, r = 0.54 across three tracers,
 FDR = 0.0015) and GABA-A/benzodiazepine density (Ro15-4513 r = 0.42; flumazenil r = 0.37). Because the
 network's single strongest correlate was the principal cortical gradient (r = 0.70), each receptor was
-re-tested with the gradient partialled out; mGluR5 (partial r = 0.49, p < 0.001), both GABA-A/BZ
-tracers (p = 0.016–0.019) and glucose metabolism (p < 0.001) **survived**, whereas cortical myelin did
-not (gradient-driven). The LGS network thus carries a genuine, gradient-independent E/I receptor
-signature — into which, notably, circadian clock-gene expression does **not** map (Phase D nulls). The
-circadian contribution to generalized epilepsy is genetic and temporal, not a feature of the epileptic
-network's cortical-molecular topography.
+subjected to two robustness tests. Partialling out the gradient, mGluR5 (partial r = 0.49, p < 0.001)
+and glucose metabolism (p < 0.001) survived, as did both GABA-A/BZ tracers (p = 0.016–0.019); cortical
+myelin did not. Re-testing in a different parcellation and null family (Schaefer-400 with a brainsmash
+variogram null), **mGluR5 (p = 0.028) and metabolism (p = 0.005) reproduced, but the GABA-A/BZ signal
+did not (p = 0.49–0.72)**. The robust molecular correlate of the LGS network is therefore glutamatergic
+mGluR5 density (with glucose metabolism); a GABAergic-inhibitory contribution is suggestive but not
+firmly established. Circadian clock-gene expression, notably, has its own modest cortical topography
+(cholinergic, thickness, metabolism) but maps onto **neither** the LGS network (informative null;
+80 % power for |r| ≥ 0.31) nor the mGluR5 signature. The circadian contribution to generalized
+epilepsy is genetic and temporal, not a feature of the epileptic network's cortical-molecular
+topography.
 
 ## Discussion
 

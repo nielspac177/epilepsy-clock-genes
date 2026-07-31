@@ -83,22 +83,39 @@ The LGS EEG-fMRI network was correlated (Spearman, spin-test nulls, BH-FDR withi
 | glucose metabolism (CMRglc) | 0.48 | <0.001 | 0.004 | 0.45 | <0.001 ✓ |
 | myelin (T1w/T2w) *— gradient control* | −0.27 | <0.001 | — | 0.14 | 0.25 ✗ |
 
-**The key rigor test:** LGS's single strongest correlate is the principal FC gradient (r = 0.70),
-and 36/68 maps are FDR-significant — the fingerprint of a broadly gradient-aligned map. So each
-receptor was re-tested with the **principal gradient partialled out**. mGluR5, both GABA-A/BZ
-tracers, and metabolism **remain spin-significant** after gradient control; **myelin does not**
-(it was gradient-driven). The LGS network therefore carries a *receptor-specific* E/I signature
-(glutamatergic + GABAergic), not merely a gradient echo.
+**Two rigor tests were applied.** (i) *Gradient control:* LGS's single strongest correlate is the
+principal FC gradient (r = 0.70), so each receptor was re-tested with the gradient partialled out —
+mGluR5 (partial r = 0.49, p < 0.001), both GABA-A/BZ tracers (p = 0.016–0.019) and metabolism
+(p < 0.001) survived; myelin did not. (ii) *Parcellation robustness (Schaefer-400 + brainsmash
+variogram null, a different atlas AND null family):*
+
+| Map | fsLR-32k (spin) | Schaefer-400 (variogram) | Robust? |
+|:--|--:|--:|:--:|
+| **mGluR5 (ABP688)** | 0.54, <0.001 | 0.36, **0.028** | **yes** ✓ |
+| glucose metabolism | 0.48, <0.001 | 0.25, **0.005** | **yes** ✓ |
+| GABA-A/BZ (flumazenil) | 0.37, 0.004 | 0.06, 0.72 | **no** ✗ |
+| GABA-A/BZ (Ro15-4513) | 0.42, <0.001 | 0.17, 0.49 | **no** ✗ |
+
+**Honest conclusion:** the *robust* molecular correlate of the LGS network is **glutamatergic mGluR5
+density (plus glucose metabolism)** — it survives both gradient control and a change of parcellation
++ null family. The **GABA-A/benzodiazepine** signal was significant vertex-wise but **does not
+survive Schaefer-400/variogram**, so it is reported as **suggestive, not robust** (already weak:
+only 2 of 3 flumazenil tracers). The LGS network thus carries a specific glutamatergic-excitatory /
+metabolic signature; a GABAergic-inhibitory contribution is possible but not firmly established.
 
 ![LGS network](../figures/fig_lgs_surface.png)
 ![GABA-A/BZ (flumazenil)](../figures/fig_gaba_surface.png)
 
-### 2.2 Circadian is absent from this fingerprint
+### 2.2 Circadian expression has its own fingerprint — but not the LGS one
 
-Clock-gene AHBA expression and clock-gene developmental trajectories do **not** align with the LGS
-map (dual spatial nulls; prior `FINDINGS_spatial.md`). So the LGS network has a rich molecular
-identity (mGluR5, GABA-A, metabolism, transmodal gradient) — circadian genetics simply is not part
-of it.
+Clock-gene AHBA expression does **not** align with the LGS map (dual spatial nulls;
+`FINDINGS_spatial.md`). Painting mean clock-gene expression onto the cortex and testing it against
+the same battery (`clock_battery.tsv`), circadian expression is **not** spatially random — it
+correlates with cholinergic VAChT (feobv, r = −0.39), cortical thickness (−0.39), GABA-A
+(flumazenil, +0.36), metabolism (+0.30) and SV2A synaptic density (+0.26); 13/62 maps FDR < 0.05.
+So clock-gene expression has a modest molecular topography of its own — it simply **does not match
+the LGS network's** (mGluR5/metabolic) topography. The circadian–epilepsy link is not written in the
+shared cortical distribution of these two maps.
 
 > **Guardrails (adversarial):** p_spin = 0.001 is the 1000-permutation floor → reported as
 > "<0.001". The norgaard flumazenil tracer is non-significant; GABA-A/BZ evidence is 2-of-3
@@ -116,9 +133,9 @@ of it.
 | 4 | rg(GGE, focal) control | 0.61 | p = 2×10⁻¹⁶ | control ✓ |
 | 5 | coloc(GGE, chronotype) @PER1 | H4 = 5×10⁻⁶ | — | null (H3) |
 | 6 | moloc @PER1 | none-shared 0.97 | — | null |
-| 7 | LGS × mGluR5 (gradient-adj) | 0.49 | p < 0.001 | **positive** |
-| 8 | LGS × GABA-A/BZ (gradient-adj) | 0.28–0.31 | p = 0.016–0.019 | positive |
-| 9 | LGS × clock-gene expression | — | dual-null | null |
+| 7 | LGS × mGluR5 (gradient-adj + Schaefer) | 0.49 / 0.36 | p < 0.001 / 0.028 | **positive, robust** |
+| 8 | LGS × GABA-A/BZ (gradient-adj) | 0.28–0.31 | p = 0.016–0.019 | positive but **not Schaefer-robust** |
+| 9 | LGS × clock-gene expression | 0.12 | p = 0.29 (power: detects \|r\|≥0.31) | informative null |
 | 10 | Behavioural MR (chronotype→GGE) | β = −0.05 | p = 0.10 | null (prior) |
 
 ---
@@ -139,6 +156,9 @@ excitation/inhibition receptor signature, into which circadian expression does n
 
 ## Limitations
 - rg reflects genetic overlap, not causation; sleep-duration effect is modest (rg −0.12).
+- The GABA-A/benzodiazepine spatial overlap is **not robust** to parcellation (fails Schaefer-400 +
+  variogram); only mGluR5 and metabolism reproduce across atlas and null family.
+- The clock↔LGS null is adequately powered (80% power for |r| ≥ 0.31) — an informative absence.
 - Chronotype is UKB-only (Jones 2019, 23andMe portion access-restricted) — ample for rg/coloc.
 - MEG delta/theta band maps require Connectome Workbench (unavailable) — the one blocked a-priori
   comparison; documented, not hidden.
