@@ -79,15 +79,28 @@ def main():
                     vol[adata == i] = v
         return nib.Nifti1Image(vol, aimg.affine, aimg.header)
 
-    # ---- TOP: LGS network as MNI slices, source-paper style (cold-hot, thresholded) ----
-    thr = float(np.nanpercentile(np.abs(np.asarray(nib.load(LGS_NII).dataobj)), 92))
-    disp = plotting.plot_stat_map(LGS_NII, display_mode="z", cut_coords=[-12, 0, 14, 28, 42, 56],
-                                  cmap=nlcm.cold_hot, threshold=thr, black_bg=True, colorbar=True,
-                                  annotate=True, draw_cross=False)
-    disp.savefig(TMP / "lgs_slices.png", dpi=200); disp.close()
+    # ---- fsaverage surfaces (shared by the LGS network + clock panels) ----
+    fs = datasets.fetch_surf_fsaverage("fsaverage")
+
+    # ---- TOP: LGS network on the inflated surface (cold-hot t; L/R lateral + medial) ----
+    lgs_img = nib.load(LGS_NII)
+    texL = surface.vol_to_surf(lgs_img, fs["pial_left"], inner_mesh=fs["white_left"])
+    texR = surface.vol_to_surf(lgs_img, fs["pial_right"], inner_mesh=fs["white_right"])
+    tvmax = float(np.nanpercentile(np.abs(np.concatenate([texL, texR])), 97.5))
+    tthr = 0.20 * tvmax
+    fL = plt.figure(figsize=(9.4, 2.5))
+    for k, (h, v, tx) in enumerate([("left", "lateral", texL), ("left", "medial", texL),
+                                    ("right", "medial", texR), ("right", "lateral", texR)]):
+        ax = fL.add_subplot(1, 4, k + 1, projection="3d")
+        plotting.plot_surf_stat_map(fs[f"infl_{h}"], np.nan_to_num(tx), hemi=h, view=v,
+                                    cmap=nlcm.cold_hot, vmax=tvmax, threshold=tthr, colorbar=False,
+                                    bg_map=fs[f"sulc_{h}"], bg_on_data=True, axes=ax, figure=fL)
+        try: ax.set_box_aspect(None, zoom=1.5)
+        except Exception: pass
+    fL.subplots_adjust(0, 0, 1, 1, wspace=-0.02)
+    fL.savefig(TMP / "lgs_surf.png", dpi=200, bbox_inches="tight", pad_inches=0); plt.close(fL)
 
     # ---- clock surfaces per stage (left lateral), diverging, no per-panel colorbar ----
-    fs = datasets.fetch_surf_fsaverage("fsaverage")
     rows = pd.read_csv("data/raw/brainspan/rows_metadata.csv")
     cols = pd.read_csv("data/raw/brainspan/columns_metadata.csv")
     clk = rows[rows["gene_symbol"].isin(CLOCK)]; idx = clk["row_num"].values - 1
@@ -95,7 +108,7 @@ def main():
                             index_col=0).values[idx] + 1)
     cols["bin"] = cols["age"].apply(stage_bin)
 
-    stage_r = {}
+    stage_r, stage_p = {}, {}
     for key, _ in STAGES:
         sel = cols[(cols["bin"] == key) & (cols["structure_acronym"].isin(MAP))]
         perreg = {r: np.nanmean(E[:, sel[sel["structure_acronym"] == r].index.values])
@@ -114,37 +127,45 @@ def main():
         f.subplots_adjust(0, 0, 1, 1); f.savefig(TMP / f"clock_{key}.png", dpi=200,
                                                  bbox_inches="tight", pad_inches=0); plt.close(f)
         regs = [r for r in perreg if np.isfinite(bs_lgs.get(r, np.nan))]
-        stage_r[key] = spearmanr([perreg[r] for r in regs], [bs_lgs[r] for r in regs]).statistic
+        sp = spearmanr([perreg[r] for r in regs], [bs_lgs[r] for r in regs])
+        stage_r[key], stage_p[key] = sp.statistic, sp.pvalue
     trend = spearmanr(range(len(STAGES)), [stage_r[k] for k, _ in STAGES])
 
     # ---- compose ----
-    fig = plt.figure(figsize=(10.5, 9.6))
-    gs = fig.add_gridspec(3, 1, height_ratios=[1.15, 1.25, 0.85], hspace=0.28)
+    fig = plt.figure(figsize=(10.5, 9.3))
+    gs = fig.add_gridspec(3, 1, height_ratios=[0.9, 1.3, 0.82], hspace=0.55)
 
-    # A: LGS slices
-    axA = fig.add_subplot(gs[0]); axA.imshow(mpimg.imread(TMP / "lgs_slices.png")); axA.axis("off")
+    # A: LGS network surface (4 views) + t colorbar
+    gsA = gs[0].subgridspec(1, 2, width_ratios=[1, 0.035], wspace=0.01)
+    axA = fig.add_subplot(gsA[0]); axA.imshow(mpimg.imread(TMP / "lgs_surf.png")); axA.axis("off")
     axA.set_title("A   The Lennox–Gastaut epileptic network  (EEG-fMRI during generalized paroxysmal fast activity)",
                   loc="left", fontsize=12, fontweight="bold")
-    axA.text(0.5, -0.06, "yellow/red = BOLD increase during epileptic discharges (t);  blue = decrease. "
-             "Axial slices on MNI152; thalamic + brainstem hubs visible.", transform=axA.transAxes,
-             ha="center", fontsize=8.5, color="#444")
+    caxA = fig.add_subplot(gsA[1])
+    cbA = fig.colorbar(ScalarMappable(Normalize(-tvmax, tvmax), nlcm.cold_hot), cax=caxA)
+    cbA.set_label("network t", fontsize=9); cbA.ax.tick_params(labelsize=8)
+    axA.text(0.5, -0.04, "yellow/red = BOLD increase during epileptic discharges;  blue = decrease. "
+             "Inflated cortical surface (thalamic/brainstem hubs are subcortical, not shown).",
+             transform=axA.transAxes, ha="center", fontsize=8.5, color="#444")
 
     # B: clock surfaces row
     gsB = gs[1].subgridspec(1, 6, width_ratios=[1, 1, 1, 1, 1, 0.12], wspace=0.04)
+    b_axes = []
     for j, (key, label) in enumerate(STAGES):
         ax = fig.add_subplot(gsB[j]); ax.imshow(mpimg.imread(TMP / f"clock_{key}.png")); ax.axis("off")
-        ax.set_title(label, fontsize=11, fontweight="bold")
-        r = stage_r[key]; col = NEG if r < 0 else POS
-        tag = "anti-correlated" if r < -0.1 else ("aligned" if r > 0.1 else "crossover")
-        ax.text(0.5, -0.02, f"r = {r:+.2f}\n{tag}", transform=ax.transAxes, ha="center", va="top",
-                fontsize=10, fontweight="bold", color=col,
+        ax.set_title(label, fontsize=10.5, fontweight="bold"); b_axes.append(ax)
+        r = stage_r[key]; p = stage_p[key]; col = NEG if r < 0 else POS
+        pstr = ("p < 0.001" if p < 0.001 else (f"p = {p:.3f}" if p < 0.01 else f"p = {p:.2f}")) \
+            + ("  *" if p < 0.05 else "")
+        ax.text(0.5, -0.03, f"r = {r:+.2f}\n{pstr}", transform=ax.transAxes, ha="center", va="top",
+                fontsize=9.5, fontweight="bold", color=col,
                 bbox=dict(boxstyle="round,pad=0.28", fc="white", ec=col, lw=1.3))
     caxB = fig.add_subplot(gsB[5])
     cb = fig.colorbar(ScalarMappable(Normalize(-CLK_VMAX, CLK_VMAX), CLK_CMAP), cax=caxB)
     cb.set_label("clock-gene expression (z)", fontsize=9); cb.set_ticks([-2, 0, 2])
     cb.ax.tick_params(labelsize=8)
-    fig.text(0.09, 0.60, "B   Clock-gene cortical expression by developmental stage",
-             fontsize=12, fontweight="bold")
+    top_b = max(a.get_position().y1 for a in b_axes)
+    fig.text(0.09, top_b + 0.085, "B   Clock-gene cortical expression by developmental stage",
+             fontsize=12, fontweight="bold", va="bottom")
 
     # C: trajectory
     axC = fig.add_subplot(gs[2])
@@ -166,10 +187,11 @@ def main():
                  arrowprops=dict(arrowstyle="->", color=POS))
 
     fig.suptitle("Circadian × epileptic-network coupling flips sign across development",
-                 fontsize=15, fontweight="bold", y=0.995)
-    fig.text(0.5, 0.005, "Clock–LGS correlation is rank-based across BrainSpan regions; cortical "
-             "surface at region resolution. Exploratory: wide per-stage CIs (all cross 0, n = 15), "
-             "uncorrected.", ha="center", fontsize=8.5, style="italic", color="#666")
+                 fontsize=15, fontweight="bold", y=0.975)
+    fig.text(0.5, 0.005, "Clock–LGS correlation is rank-based across BrainSpan regions (cortical "
+             "surface at region resolution). Individual per-stage correlations are exploratory and "
+             "mostly non-significant (small n; * p < 0.05); the significant result is the monotonic "
+             "trend across stages (panel C).", ha="center", fontsize=8.5, style="italic", color="#666")
     fig.savefig(FIG / "fig_developmental_signflip.png", dpi=210, bbox_inches="tight")
     print("stage r:", {k: round(stage_r[k], 3) for k, _ in STAGES},
           f"\ntrend rho={trend.statistic:.3f} p={trend.pvalue:.3f}")
