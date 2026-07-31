@@ -6,13 +6,16 @@ rebuilt off iCloud to run LDSC and neuromaps reproducibly.*
 
 ## Headline
 
-The circadian–epilepsy link is **genetic and temporal, not spatial-molecular**. Generalized
-epilepsy (GGE) shows circadian gene-set enrichment (MAGMA) and a **specific genetic correlation
-with short sleep duration**, but **no shared causal variant** with chronotype at PER1 and **no
-circadian signature** in the cortical map of the Lennox–Gastaut (LGS) epileptic network. That LGS
-network is not molecularly featureless, though: it carries a **receptor-specific excitation/
-inhibition fingerprint** (glutamatergic mGluR5 + GABA-A/benzodiazepine) that survives control for
-the dominant cortical gradient.
+The circadian–epilepsy link is **genetic, temporal, and developmental — not a spatial-molecular
+feature of the adult brain**. Generalized epilepsy (GGE) shows circadian gene-set enrichment (MAGMA)
+and a **specific genetic correlation with short sleep duration**, but **no shared causal variant**
+with chronotype at PER1 and **no circadian signature** in the cortical map of the mature Lennox–
+Gastaut (LGS) epileptic network. That LGS network is not molecularly featureless: it carries a
+**robust glutamatergic signature** (mGluR5 density + glucose metabolism, surviving gradient control
+and re-parcellation; a GABA-A/benzodiazepine signal appears but is not parcellation-robust). And
+circadian expression **does** relate to the network's cortical layout — but **developmentally**
+(prenatal anticorrelation shifting monotonically to an adult near-zero; ρ = 0.90, p = 0.037,
+exploratory), consistent with a **neurodevelopmental window** rather than an ongoing adult mechanism.
 
 ---
 
@@ -189,11 +192,14 @@ is not explained by a causal effect of sleep behaviour (MR null), a shared causa
 of clock-gene expression (clock↔LGS spatial null, adequately powered). The epileptic network carries
 a reproducible molecular signature — glutamatergic mGluR5 density and glucose metabolism, surviving
 gradient control and Schaefer-400 re-parcellation — into which circadian expression does not map in
-the adult brain. Development is the exception: the clock↔network correlation shifts monotonically from
-prenatal anticorrelation to adult near-zero (ρ = 0.90, p = 0.037). Net: a robust, type-specific,
-set-level circadian enrichment acting through sleep-homeostatic genetics and developmental timing,
-not through the mature epileptic network's molecular topography. Independent replication and the PER1
-causal gene (clock *PER1* vs synaptic *VAMP2*) remain open.
+the adult brain. Development is a core part of the picture, not a footnote: the clock↔network
+correlation shifts monotonically from prenatal anticorrelation to adult near-zero (ρ = 0.90,
+p = 0.037; exploratory). **Circadian genetics does relate to the epileptic network's cortical layout,
+but developmentally, not in the mature brain — consistent with a neurodevelopmental window rather than
+an ongoing adult mechanism.** Net: a robust, type-specific, set-level circadian enrichment acting
+through sleep-homeostatic genetics and a developmental spatial window, not through the mature
+epileptic network's molecular topography. Independent replication and the PER1 causal gene (clock
+*PER1* vs synaptic *VAMP2*) remain open.
 
 **For clinicians and imagers.** The body-clock genes overlap with generalized epilepsy through
 *sleep* — specifically how much sleep the brain needs, not whether a person is a morning or evening

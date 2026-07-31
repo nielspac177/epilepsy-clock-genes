@@ -18,8 +18,10 @@ the MEG frequency-band maps (need Connectome Workbench). Neither changes the con
 
 ## Results summary
 
-**In time, not in space.** Circadian genetics is tied to generalized epilepsy through when the brain
-sleeps, not through where the epileptic network sits in the cortex.
+**In time, and early — not in the adult brain's space.** Circadian genetics is tied to generalized
+epilepsy through *when* the brain sleeps and through a *developmental window*, not through where the
+mature epileptic network sits in the cortex. The clock does relate to the epileptic network's cortical
+layout — but developmentally (strongest before birth) rather than as an ongoing adult mechanism.
 
 - **Clock genes are enriched in GGE, not focal.** LD-aware MAGMA competitive test P = 1.7×10⁻⁴
   (β = 0.67), focal null (P = 0.73), housekeeping set null, robust to dropping the strongest gene
@@ -66,12 +68,15 @@ variants; three-trait moloc: 0.97 posterior of independent signals), or by the c
 of clock-gene expression (clock↔LGS spatial null, adequately powered). The epileptic network does
 carry a reproducible molecular signature — glutamatergic mGluR5 density and glucose metabolism,
 surviving gradient control and a Schaefer-400 re-parcellation — but circadian expression is not part
-of it in the adult brain. The one place the temporal/spatial separation softens is development: the
+of it in the adult brain. Development, however, is a core part of the picture, not a footnote: the
 clock↔network correlation shifts monotonically from prenatal anticorrelation to adult near-zero
-(ρ = 0.90, p = 0.037). The defensible estimand-level statement is a robust, type-specific, set-level
-circadian enrichment that acts through sleep-homeostatic genetics and developmental timing rather
-than through the mature epileptic network's molecular topography; independent replication and
-resolution of the PER1 causal gene (clock *PER1* vs synaptic *VAMP2*) remain open.
+(ρ = 0.90, p = 0.037; exploratory). Circadian genetics *does* relate to the epileptic network's
+cortical layout — but developmentally, not in the mature brain — consistent with a neurodevelopmental
+window rather than an ongoing adult mechanism. The defensible estimand-level statement is a robust,
+type-specific, set-level circadian enrichment that acts through sleep-homeostatic genetics and a
+developmental spatial window rather than through the mature epileptic network's molecular topography;
+independent replication and resolution of the PER1 causal gene (clock *PER1* vs synaptic *VAMP2*)
+remain open.
 
 **For clinicians and imagers.** The body-clock genes overlap with generalized epilepsy through
 *sleep*, and specifically through how much sleep the brain needs — not through whether someone is a
