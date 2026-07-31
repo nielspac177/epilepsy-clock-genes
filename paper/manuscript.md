@@ -222,8 +222,8 @@ firmly established. Circadian clock-gene expression, notably, has its own modest
 (cholinergic, thickness, metabolism) but maps onto **neither** the LGS network (informative null;
 80 % power for |r| ≥ 0.31) nor the mGluR5 signature in the adult brain. That adult null, however, is
 not static. Correlating clock-gene expression with the LGS network across BrainSpan developmental
-stages, the relationship shifts monotonically from prenatal anticorrelation (r = −0.40; −0.83 in
-cortex alone) through a childhood crossover to a weakly positive adult value (+0.19), and the trend
+stages (Figure 4), the relationship shifts monotonically from prenatal anticorrelation (r = −0.40;
+−0.83 in cortex alone) through a childhood crossover to a weakly positive adult value (+0.19), and the trend
 across the five stages is nominally significant (Spearman ρ = 0.90, p = 0.037). This analysis is
 exploratory — per-stage confidence intervals are wide (n = 15 regions), the developmental-atlas-to-map
 assignment is coarse, and the p value is uncorrected — but it indicates that **circadian expression
